@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 session_start();
 
-$host = '127.0.0.1';
+$host = 'localhost';
 $dbname = 'gestion_collectes';
-$username = 'nom_utilisateur_choisi';
-$password = 'mot_de_passe_solide';
+$username = 'superadmin';
+$password = 'superpassword';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password, [

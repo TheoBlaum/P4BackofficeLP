@@ -1,3 +1,27 @@
+<?php
+require 'config.php';
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $nom = $_POST["nom"];
+    $email = $_POST["email"];
+    $mot_de_passe = $_POST["mot_de_passe"];
+    $role = $_POST["role"];
+
+    // Insérer la collecte avec le bénévole sélectionné
+    $stmt = $pdo->prepare("INSERT INTO benevoles (nom, email, mot_de_passe,role) VALUES (?, ?, ?, ?)");
+    if (!$stmt->execute([$nom, $email, $mot_de_passe, $role])) {
+        die('Erreur lors de l\'insertion dans la base de données.');
+    }
+
+    header("Location: volunteer_list.php");
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,7 +35,7 @@
 
 <div class="flex h-screen">
     <!-- Barre de navigation -->
-    <div class="bg-cyan-200 text-white w-64 p-6">L
+    <div class="bg-cyan-200 text-white w-64 p-6">
         <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
 
             <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i

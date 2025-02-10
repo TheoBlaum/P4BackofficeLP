@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1deb3
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:3306
--- Généré le : dim. 02 fév. 2025 à 17:47
--- Version du serveur : 8.0.41-0ubuntu0.24.04.1
--- Version de PHP : 8.3.6
+-- Host: 127.0.0.1:3306
+-- Generation Time: Feb 10, 2025 at 11:18 AM
+-- Server version: 9.1.0
+-- PHP Version: 8.3.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,47 +18,54 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `gestion_collectes`
+-- Database: `gestion_collectes`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `benevoles`
+-- Table structure for table `benevoles`
 --
 
-CREATE TABLE `benevoles` (
-  `id` int NOT NULL,
+DROP TABLE IF EXISTS `benevoles`;
+CREATE TABLE IF NOT EXISTS `benevoles` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `mot_de_passe` varchar(255) NOT NULL,
-  `role` enum('admin','participant') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `role` enum('admin','participant') NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Déchargement des données de la table `benevoles`
+-- Dumping data for table `benevoles`
 --
 
 INSERT INTO `benevoles` (`id`, `nom`, `email`, `mot_de_passe`, `role`) VALUES
 (1, 'Alice Dupont', 'alice.dupont@example.com', '5504b4f70ca78f97137ff8ad5f910248', 'admin'),
 (2, 'Bob Martin', 'bob.martin@example.com', '2e248e7a3b4fbaf2081b3dff10ee402b', 'participant'),
-(3, 'Charlie Dubois', 'charlie.dubois@example.com', '9148b120a413e9e84e57f1231f04119a', 'participant');
+(3, 'Charlie Dubois', 'charlie.dubois@example.com', '9148b120a413e9e84e57f1231f04119a', 'participant'),
+(9, 'Michel', 'Michmich@gmail.com', 'Michel12', 'participant');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `collectes`
+-- Table structure for table `collectes`
 --
 
-CREATE TABLE `collectes` (
-  `id` int NOT NULL,
+DROP TABLE IF EXISTS `collectes`;
+CREATE TABLE IF NOT EXISTS `collectes` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `date_collecte` date NOT NULL,
   `lieu` varchar(255) NOT NULL,
-  `id_benevole` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id_benevole` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_benevole` (`id_benevole`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Déchargement des données de la table `collectes`
+-- Dumping data for table `collectes`
 --
 
 INSERT INTO `collectes` (`id`, `date_collecte`, `lieu`, `id_benevole`) VALUES
@@ -75,18 +82,21 @@ INSERT INTO `collectes` (`id`, `date_collecte`, `lieu`, `id_benevole`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `dechets_collectes`
+-- Table structure for table `dechets_collectes`
 --
 
-CREATE TABLE `dechets_collectes` (
-  `id` int NOT NULL,
+DROP TABLE IF EXISTS `dechets_collectes`;
+CREATE TABLE IF NOT EXISTS `dechets_collectes` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `id_collecte` int DEFAULT NULL,
   `type_dechet` varchar(50) NOT NULL,
-  `quantite_kg` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `quantite_kg` float NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_collecte` (`id_collecte`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Déchargement des données de la table `dechets_collectes`
+-- Dumping data for table `dechets_collectes`
 --
 
 INSERT INTO `dechets_collectes` (`id`, `id_collecte`, `type_dechet`, `quantite_kg`) VALUES
@@ -98,64 +108,17 @@ INSERT INTO `dechets_collectes` (`id`, `id_collecte`, `type_dechet`, `quantite_k
 (6, 3, 'plastique', 4.3);
 
 --
--- Index pour les tables déchargées
+-- Constraints for dumped tables
 --
 
 --
--- Index pour la table `benevoles`
---
-ALTER TABLE `benevoles`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- Index pour la table `collectes`
---
-ALTER TABLE `collectes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_benevole` (`id_benevole`);
-
---
--- Index pour la table `dechets_collectes`
---
-ALTER TABLE `dechets_collectes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_collecte` (`id_collecte`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `benevoles`
---
-ALTER TABLE `benevoles`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT pour la table `collectes`
---
-ALTER TABLE `collectes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT pour la table `dechets_collectes`
---
-ALTER TABLE `dechets_collectes`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- Contraintes pour les tables déchargées
---
-
---
--- Contraintes pour la table `collectes`
+-- Constraints for table `collectes`
 --
 ALTER TABLE `collectes`
   ADD CONSTRAINT `collectes_ibfk_1` FOREIGN KEY (`id_benevole`) REFERENCES `benevoles` (`id`);
 
 --
--- Contraintes pour la table `dechets_collectes`
+-- Constraints for table `dechets_collectes`
 --
 ALTER TABLE `dechets_collectes`
   ADD CONSTRAINT `dechets_collectes_ibfk_1` FOREIGN KEY (`id_collecte`) REFERENCES `collectes` (`id`);
