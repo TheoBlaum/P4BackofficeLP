@@ -1,3 +1,4 @@
+
 <?php
 require 'config.php';
 
@@ -8,6 +9,7 @@ error_reporting(E_ALL);
 $stmt_benevoles = $pdo->query("SELECT id, nom FROM benevoles ORDER BY nom");
 $stmt_benevoles->execute();
 $benevoles = $stmt_benevoles->fetchAll();
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $date = $_POST["date"];

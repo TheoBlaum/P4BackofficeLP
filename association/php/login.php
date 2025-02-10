@@ -1,3 +1,4 @@
+
 <?php
 session_start(); // Démarrer la session
 require 'config.php';

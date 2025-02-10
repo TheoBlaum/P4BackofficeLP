@@ -1,3 +1,4 @@
+
 <?php
 $password = "test"; // Change le mot de passe ici
 $hash = password_hash($password, PASSWORD_DEFAULT);
