@@ -33,9 +33,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare("UPDATE collectes SET date_collecte = ?, lieu = ?, id_benevole = ? WHERE id = ?");
     $stmt->execute([$date, $lieu, $benevole_id, $id]);
 
+    
+    // deuxieme requette pour mettre a jour les dechets
+    $type_dechet = $_POST["type_dechet"];
+    $quantite_kg = $_POST["quantite_kg"];
+    $id_collecte = $_GET['id']; 
+
+
+    $stmt =  $pdo->prepare("INSERT INTO dechets_collectes (type_dechet, quantite_kg, id_collecte) VALUES (?, ?, ?)");
+    $stmt->execute([$type_dechet, $quantite_kg, $id]);
+
     header("Location: collection_list.php");
     exit;
 }
+
+$stmt_dechets_collectes = $pdo->prepare("SELECT id, type_dechet,quantite_kg FROM dechets_collectes ORDER BY type_dechet");
+$stmt_dechets_collectes->execute();
+$dechets_collectes = $stmt_dechets_collectes->fetchAll();
+
 ?>
 
 <!DOCTYPE html>
@@ -98,6 +113,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <?php endforeach; ?>
                     </select>
                 </div>
+                <div> 
+                <label class="block text-sm font-medium text-gray-700">Dechets :</label>
+                        <select id="type_dechet" name="type_dechet" required>
+                            <option value="">Sélectionnez le type de dechet</option>
+                            <option value="Plastique">Plastique</option>
+                            <option value="Verre">Verre</option>
+                            <option value="Papier">Papier</option>
+                            <option value="Métal">Métal</option>
+                            <option value="Déchets organiques">Déchets organiques</option>
+                        </select>
+                    <label for="quantite_kg">Quantité (kg) :</label>
+                    <input type="number" id="quantite_kg" name="quantite_kg" min="0.1" step="0.1" required>
+                </div>
+
+
                 <div class="flex justify-end space-x-4">
                     <a href="collection_list.php" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Annuler</a>
                     <button type="submit" class="bg-cyan-200 text-white px-4 py-2 rounded-lg">Modifier</button>
