@@ -75,11 +75,13 @@ error_reporting(E_ALL);
                 <p class="text-3xl font-bold text-blue-600"><?= count($collectes) ?></p>
             </div>
             <!-- Dernière collecte -->
+            <?php if (!empty($collectes)) : ?>
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <h3 class="text-xl font-semibold text-gray-800 mb-3">Dernière Collecte</h3>
                 <p class="text-lg text-gray-600"><?= htmlspecialchars($collectes[0]['lieu']) ?></p>
                 <p class="text-lg text-gray-600"><?= date('d/m/Y', strtotime($collectes[0]['date_collecte'])) ?></p>
             </div>
+            <?php endif; ?>
             <!-- Bénévole Responsable -->
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <h3 class="text-xl font-semibold text-gray-800 mb-3">Bénévole Admin</h3>

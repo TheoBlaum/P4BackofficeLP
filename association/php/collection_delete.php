@@ -1,6 +1,8 @@
 <?php
 require 'config.php';
 
+require 'config.php';
+
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = (int) $_GET['id'];
 
@@ -9,6 +11,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]);
 
+        // Supprimer d'abord les déchets collectés liés à cette collecte
+        $stmt = $pdo->prepare("DELETE FROM dechets_collectes WHERE id_collecte = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Ensuite, supprimer la collecte
         $stmt = $pdo->prepare("DELETE FROM collectes WHERE id = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
@@ -24,4 +32,5 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 } else {
     echo "ID invalide.";
 }
+
 ?>

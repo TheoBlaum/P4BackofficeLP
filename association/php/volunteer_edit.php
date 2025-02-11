@@ -1,6 +1,6 @@
 <?php
 require 'config.php';
-
+$roles = ['admin','participant'];
 // Vérifier si un ID de benevoles est fourni
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: volunteer_list.php");
@@ -12,7 +12,7 @@ $id = $_GET['id'];
 // Récupérer les informations des benevoles
 $stmt = $pdo->prepare("SELECT * FROM benevoles WHERE id = ?");
 $stmt->execute([$id]);
-$collecte = $stmt->fetch();
+$benevole = $stmt->fetch();
 
 if (!$benevole) {
     header("Location: volunteer_list.php");
@@ -23,13 +23,14 @@ if (!$benevole) {
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nom = $_POST["nom"];
     $email = $_POST["email"];
-    $role = $_POST["role"]; 
+    $role = $_POST["role"];
+    $benevole_id = $_POST["id"];
 
 
-    $stmt = $pdo->prepare("UPDATE benevoles SET nom = ?, email = ?, role = ?");
-    $stmt->execute([$nom, $email, $role]);
+    $stmt = $pdo->prepare("UPDATE benevoles SET nom = ?, email = ?, role = ? WHERE id = ?");
+    $stmt->execute([$nom, $email, $role, $id]);
 
-    header("Location: volunteer_list.php");
+    header("Location: volunteer_list.php"); 
     exit;
 }
 ?>
@@ -67,20 +68,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <!-- Contenu principal -->
     <div class="flex-1 p-8 overflow-y-auto">
-        <h1 class="text-4xl font-bold text-blue-900 mb-6">Modifier une collecte</h1>
+        <h1 class="text-4xl font-bold text-blue-900 mb-6">Modifier un Benevole</h1>
 
         <!-- Formulaire -->
         <div class="bg-white p-6 rounded-lg shadow-lg">
             <form method="POST" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Date :</label>
-                    <input type="text" name="name" value="<?= htmlspecialchars($benevole['name']) ?>" required
+                    <label class="block text-sm font-medium text-gray-700">Nom :</label>
+                    <input type="text" name="nom" value="<?= htmlspecialchars($benevole['nom']) ?>" required
                            class="w-full p-2 border border-gray-300 rounded-lg">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Lieu :</label>
+                    <label class="block text-sm font-medium text-gray-700">Email :</label>
                     <input type="text" name="email" value="<?= htmlspecialchars($benevole['email']) ?>" required
                            class="w-full p-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Role :</label>
+                    <select name="role" required
+                            class="w-full p-2 border border-gray-300 rounded-lg">
+                        <option value="" disabled selected>Sélectionnez un role</option>
+                        <?php foreach ($roles as $role): ?>
+                            <option value="<?= $role ?>" <?= $benevole['role'] == $role ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($role) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <div class="flex justify-end space-x-4">
                     <a href="volunteer_list.php" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Annuler</a>
