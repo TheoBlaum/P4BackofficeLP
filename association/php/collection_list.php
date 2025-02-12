@@ -144,10 +144,10 @@ error_reporting(E_ALL);
                         <td class="py-3 px-4"><?= $metal ?> kg</td>
                         <td class="py-3 px-4"><?= $organiques ?> kg</td>
                         <td class="py-3 px-4 font-bold"><?= $total ?> kg</td>
-                        <!-- <td class="py-3 px-4">✏️ 🗑️</td> -->
+                   
 
-                        <td class="py-3 px-4 flex space-x-2"><a href="collection_edit.php?id=<?= $collecte['id'] ?>" class="bg-cyan-200 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">✏️ Modifier</a>
-                        <a href="collection_delete.php?id=<?= $collecte['id'] ?>" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette collecte ?');">🗑️ Supprimer
+                        <td class="py-3 px-4 flex space-x-2"><a href="collection_edit.php?id=<?= $collecte['id'] ?>" class="bg-cyan-200 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">✏️</a>
+                        <a href="collection_delete.php?id=<?= $collecte['id'] ?>" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette collecte ?');">🗑️
                             </a>
                         </td>
                     </tr>
