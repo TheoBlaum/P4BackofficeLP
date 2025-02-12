@@ -91,11 +91,26 @@ error_reporting(E_ALL);
 
         <!-- Cartes d'informations -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+<!-- Bénévole Responsable -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Bénévole Admin</h3>
+                <p class="text-lg text-gray-600"><?= $adminNom ?></p>
+            </div>
+
             <!-- Nombre total de collectes -->
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <h3 class="text-xl font-semibold text-gray-800 mb-3">Total des Collectes</h3>
                 <p class="text-3xl font-bold text-blue-600"><?= count($collectes) ?></p>
             </div>
+
+
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Total Déchets Collectés (kg)</h3>
+                <p class="text-3xl font-bold text-blue-600"><?= $total2 ?> kg</p>
+            </div>
+
+
             <!-- Dernière collecte -->
             <?php if (!empty($collectes)) : ?>
             <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -104,16 +119,8 @@ error_reporting(E_ALL);
                 <p class="text-lg text-gray-600"><?= date('d/m/Y', strtotime($collectes[0]['date_collecte'])) ?></p>
             </div>
             <?php endif; ?>
-            <!-- Bénévole Responsable -->
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h3 class="text-xl font-semibold text-gray-800 mb-3">Bénévole Admin</h3>
-                <p class="text-lg text-gray-600"><?= $adminNom ?></p>
-            </div>
-
-            <div class="bg-white p-6 rounded-lg shadow-lg">
-                <h3 class="text-xl font-semibold text-gray-800 mb-3">Total Déchets Collectés (kg)</h3>
-                <p class="text-3xl font-bold text-blue-600"><?= $total2 ?> kg</p>
-            </div>
+            
+            
 
         </div>
 
@@ -170,5 +177,6 @@ error_reporting(E_ALL);
         </div>
     </div>
 </div>
+<script src="logout.js"></script>
 </body>
 </html>
