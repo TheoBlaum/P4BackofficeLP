@@ -9,19 +9,24 @@ try {
         ORDER BY c.date_collecte DESC
     ");
 
+    $collectes = $stmt->fetchAll();
+
+    // Récupérer l'admin
     $query = $pdo->prepare("SELECT nom FROM benevoles WHERE role = 'admin' LIMIT 1");
     $query->execute();
-
-    $collectes = $stmt->fetchAll();
     $admin = $query->fetch(PDO::FETCH_ASSOC);
     $adminNom = $admin ? htmlspecialchars($admin['nom']) : 'Aucun administrateur trouvé';
 
-
-    $stmt3 = $pdo->query("
-    SELECT quantite_kg
-    FROM dechets_collectes 
-    WHERE type_dechet = 'Métal'");
-    $quantities = $stmt3->fetchAll();
+    // Récupérer les quantités totales de chaque type de déchet par collecte
+    $stmt2 = $pdo->query("
+        SELECT id_collecte, type_dechet, SUM(quantite_kg) AS total_kg
+        FROM dechets_collectes
+        GROUP BY id_collecte, type_dechet
+    ");
+    $dechets_collectes = [];
+    while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+        $dechets_collectes[$row['id_collecte']][$row['type_dechet']][] = $row;
+    }
 
 
 } catch (PDOException $e) {
@@ -116,16 +121,28 @@ error_reporting(E_ALL);
                 </thead>
                 <tbody class="divide-y divide-gray-300">
                 <?php foreach ($collectes as $collecte) : ?>
+
+                    <?php
+                        $id_collecte = $collecte['id'];
+                        // Récupération des poids des différents types de déchets pour la collecte
+                        $plastique = $dechets_collectes[$id_collecte]['Plastique'][0]['total_kg'] ?? 0;
+                        $verre = $dechets_collectes[$id_collecte]['Verre'][0]['total_kg'] ?? 0;
+                        $papier = $dechets_collectes[$id_collecte]['Papier'][0]['total_kg'] ?? 0;
+                        $metal = $dechets_collectes[$id_collecte]['Métal'][0]['total_kg'] ?? 0;
+                        $organiques = $dechets_collectes[$id_collecte]['Organiques'][0]['total_kg'] ?? 0;
+                        $total = $plastique + $verre + $papier + $metal + $organiques;
+                    ?>
                     <tr class="hover:bg-gray-100 transition duration-200">
-                    <td class="py-3 px-4"><?= $collecte['nom'] ? htmlspecialchars($collecte['nom']) : 'Aucun bénévole' ?></td>
+                    <td class="py-3 px-4"><?= htmlspecialchars($collecte['nom']) ?: 'Aucun bénévole' ?></td>
                         <td class="py-3 px-4"><?= date('d/m/Y', strtotime($collecte['date_collecte'])) ?></td>
                         <td class="py-3 px-4"><?= htmlspecialchars($collecte['lieu']) ?></td>
-                        <td class="py-3 px-4"><?= htmlspecialchars($quantities[0]['quantite_kg']) ?></td>
-                        <td class="py-3 px-4"><?= htmlspecialchars($collecte['lieu']) ?></td>
-                        <td class="py-3 px-4"><?= htmlspecialchars($collecte['lieu']) ?></td>
-                        <td class="py-3 px-4"><?= htmlspecialchars($collecte['lieu']) ?></td>
-                        <td class="py-3 px-4"><?= htmlspecialchars($collecte['lieu']) ?></td>
-                        <td class="py-3 px-4"><?= htmlspecialchars($collecte['lieu']) ?></td>
+                        <td class="py-3 px-4"><?= $plastique ?> kg</td>
+                        <td class="py-3 px-4"><?= $verre ?> kg</td>
+                        <td class="py-3 px-4"><?= $papier ?> kg</td>
+                        <td class="py-3 px-4"><?= $metal ?> kg</td>
+                        <td class="py-3 px-4"><?= $organiques ?> kg</td>
+                        <td class="py-3 px-4 font-bold"><?= $total ?> kg</td>
+                        <!-- <td class="py-3 px-4">✏️ 🗑️</td> -->
 
                         <td class="py-3 px-4 flex space-x-2"><a href="collection_edit.php?id=<?= $collecte['id'] ?>" class="bg-cyan-200 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">✏️ Modifier</a>
                         <a href="collection_delete.php?id=<?= $collecte['id'] ?>" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette collecte ?');">🗑️ Supprimer

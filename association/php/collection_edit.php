@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
     $stmt =  $pdo->prepare("INSERT INTO dechets_collectes (type_dechet, quantite_kg, id_collecte) VALUES (?, ?, ?)");
-    $stmt->execute([$type_dechet, $quantite_kg, $id]);
+    $stmt->execute([$type_dechet, $quantite_kg, $id_collecte]);
 
     header("Location: collection_list.php");
     exit;
