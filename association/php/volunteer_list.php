@@ -61,7 +61,7 @@ try {
                             <th class="py-3 px-4 text-left">Nom</th>
                             <th class="py-3 px-4 text-left">Email</th>
                             <th class="py-3 px-4 text-left">Rôle</th>
-                            <th class="py-3 px-4 text-left">Total Déchets Collectés (kg)</th>
+                            <th class="py-3 px-4 text-left">Total Déchets Collectés</th>
                             <th class="py-3 px-4 text-left">Actions</th>
                         </tr>
                     </thead>
@@ -71,7 +71,7 @@ try {
                                 <td class="py-3 px-4"><?= htmlspecialchars($benevole['nom']) ?></td>
                                 <td class="py-3 px-4"><?= htmlspecialchars($benevole['email']) ?></td>
                                 <td class="py-3 px-4"><?= htmlspecialchars($benevole['role']) ?></td>
-                                <td class="py-3 px-4"><?= number_format($benevole['total_dechets'], 2) ?> kg</td>
+                                <td class="py-3 px-4 font-bold"><?= number_format($benevole['total_dechets'], 2) ?> kg</td>
                                 <td class="py-3 px-4 flex space-x-2">
                                     <a href="volunteer_edit.php?id=<?= $benevole['id'] ?>" class="bg-cyan-200 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg">✏️</a>
                                     <a href="volunteer_delete.php?id=<?= $benevole['id'] ?>" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg" onclick="return confirm('Voulez-vous vraiment supprimer ce bénévole ?')">🗑️</a>

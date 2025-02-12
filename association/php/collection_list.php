@@ -30,6 +30,13 @@ try {
         $dechets_collectes[$row['id_collecte']][$row['type_dechet']][] = $row;
     }
 
+    $stmt3 = $pdo->query("
+    SELECT  SUM(quantite_kg) AS total_kg
+    FROM dechets_collectes
+");
+$total2 = $stmt3->fetch(PDO::FETCH_ASSOC)['total_kg'];
+
+
 
 } catch (PDOException $e) {
     echo "Erreur de base de données : " . $e->getMessage();
@@ -83,7 +90,7 @@ error_reporting(E_ALL);
         <?php endif; ?>
 
         <!-- Cartes d'informations -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <!-- Nombre total de collectes -->
             <div class="bg-white p-6 rounded-lg shadow-lg">
                 <h3 class="text-xl font-semibold text-gray-800 mb-3">Total des Collectes</h3>
@@ -102,6 +109,12 @@ error_reporting(E_ALL);
                 <h3 class="text-xl font-semibold text-gray-800 mb-3">Bénévole Admin</h3>
                 <p class="text-lg text-gray-600"><?= $adminNom ?></p>
             </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Total Déchets Collectés (kg)</h3>
+                <p class="text-3xl font-bold text-blue-600"><?= $total2 ?> kg</p>
+            </div>
+
         </div>
 
         <!-- Tableau des collectes -->
