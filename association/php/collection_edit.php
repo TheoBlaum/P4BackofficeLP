@@ -121,7 +121,7 @@ $dechets_collectes = $stmt_dechets_collectes->fetchAll();
                             <option value="Verre">Verre</option>
                             <option value="Papier">Papier</option>
                             <option value="Métal">Métal</option>
-                            <option value="Déchets organiques">Déchets organiques</option>
+                            <option value="Organiques">Organiques</option>
                         </select>
                     <label for="quantite_kg">Quantité (kg) :</label>
                     <input type="number" id="quantite_kg" name="quantite_kg" min="0.1" step="0.1" required>

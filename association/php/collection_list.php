@@ -23,6 +23,8 @@ try {
         FROM dechets_collectes
         GROUP BY id_collecte, type_dechet
     ");
+
+    // Récupérer les quantités totales de chaque type de déchet par collecte
     $dechets_collectes = [];
     while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
         $dechets_collectes[$row['id_collecte']][$row['type_dechet']][] = $row;
