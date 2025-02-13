@@ -1,5 +1,16 @@
 <?php
 require 'config.php';
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Vérifiez le rôle de l'utilisateur connecté
+$userId = $_SESSION['user_id'];
+$query = $pdo->prepare("SELECT role FROM benevoles WHERE id = ?");
+$query->execute([$userId]);
+$user = $query->fetch(PDO::FETCH_ASSOC);
+$userRole = $user ? $user['role'] : null;
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);

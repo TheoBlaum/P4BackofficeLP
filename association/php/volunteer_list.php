@@ -1,5 +1,17 @@
 <?php
 require 'config.php';
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Vérifiez le rôle de l'utilisateur connecté
+$userId = $_SESSION['user_id'];
+$query = $pdo->prepare("SELECT role FROM benevoles WHERE id = ?");
+$query->execute([$userId]);
+$user = $query->fetch(PDO::FETCH_ASSOC);
+$userRole = $user ? $user['role'] : null;
+
 
 try {
     // Récupérer les bénévoles avec le total des déchets collectés pour chaque bénévole et COALESCE pour mettre 0 si la somme est nulle
@@ -37,9 +49,13 @@ try {
         <div class="bg-cyan-200 text-white w-64 p-6">
             <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
             <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
+            <?php if ($userRole === 'admin'): ?> 
             <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
+            <?php endif; ?>
             <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
+            <?php if ($userRole === 'admin'): ?> 
             <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
+             <?php endif; ?>
             <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-cogs mr-3"></i> Mon compte</a></li>
             <div class="mt-6">
                 <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg shadow-md">
@@ -59,23 +75,30 @@ try {
                     <thead class="bg-blue-800 text-white">
                         <tr>
                             <th class="py-3 px-4 text-left">Nom</th>
-                            <th class="py-3 px-4 text-left">Email</th>
+                            <?php if ($userRole === 'admin'): ?> 
+                            <th class="py-3 px-4 text-left">Email</th> <?php endif; ?>
                             <th class="py-3 px-4 text-left">Rôle</th>
                             <th class="py-3 px-4 text-left">Total Déchets Collectés</th>
+                            <?php if ($userRole === 'admin'): ?>  
                             <th class="py-3 px-4 text-left">Actions</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-300">
                         <?php foreach ($benevoles as $benevole): ?>
                             <tr class="hover:bg-gray-100 transition duration-200">
                                 <td class="py-3 px-4"><?= htmlspecialchars($benevole['nom']) ?></td>
+                                <?php if ($userRole === 'admin'): ?> 
                                 <td class="py-3 px-4"><?= htmlspecialchars($benevole['email']) ?></td>
+                                 <?php endif; ?>
                                 <td class="py-3 px-4"><?= htmlspecialchars($benevole['role']) ?></td>
                                 <td class="py-3 px-4 font-bold"><?= number_format($benevole['total_dechets'], 2) ?> kg</td>
+                                <?php if ($userRole === 'admin'): ?> 
                                 <td class="py-3 px-4 flex space-x-2">
                                     <a href="volunteer_edit.php?id=<?= $benevole['id'] ?>" class="bg-cyan-200 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg">✏️</a>
                                     <a href="volunteer_delete.php?id=<?= $benevole['id'] ?>" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg" onclick="return confirm('Voulez-vous vraiment supprimer ce bénévole ?')">🗑️</a>
                                 </td>
+                                 <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

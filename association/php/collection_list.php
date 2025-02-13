@@ -1,5 +1,16 @@
 <?php
 require 'config.php';
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// Vérifiez le rôle de l'utilisateur connecté
+$userId = $_SESSION['user_id'];
+$query = $pdo->prepare("SELECT role FROM benevoles WHERE id = ?");
+$query->execute([$userId]);
+$user = $query->fetch(PDO::FETCH_ASSOC);
+$userRole = $user ? $user['role'] : null;
 
 try {
     $stmt = $pdo->query("
@@ -66,9 +77,13 @@ error_reporting(E_ALL);
     <div class="bg-cyan-200 text-white w-64 p-6">
         <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
             <li><a href="collection_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
+            <?php if ($userRole === 'admin'): ?> 
             <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
+            <?php endif; ?>
             <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
+            <?php if ($userRole === 'admin'): ?>
             <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
+            <?php endif; ?>
             <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:bg-blue-800 rounded-lg"><i class="fas fa-cogs mr-3"></i> Mon compte</a></li>
         <div class="mt-6">
             <button onclick="logout()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg shadow-md">
@@ -138,7 +153,8 @@ error_reporting(E_ALL);
                     <th class="py-3 px-4 text-left">Metal</th>
                     <th class="py-3 px-4 text-left">Organiques</th>
                     <th class="py-3 px-4 text-left">Poids Total</th>
-                    <th class="py-3 px-4 text-left">Actions</th>
+                    <?php if ($userRole === 'admin'): ?> 
+                    <th class="py-3 px-4 text-left">Actions</th> <?php endif; ?>
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-300">
@@ -165,11 +181,12 @@ error_reporting(E_ALL);
                         <td class="py-3 px-4"><?= $organiques ?> kg</td>
                         <td class="py-3 px-4 font-bold"><?= $total ?> kg</td>
                    
-
+                        <?php if ($userRole === 'admin'): ?>
                         <td class="py-3 px-4 flex space-x-2"><a href="collection_edit.php?id=<?= $collecte['id'] ?>" class="bg-cyan-200 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">✏️</a>
                         <a href="collection_delete.php?id=<?= $collecte['id'] ?>" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette collecte ?');">🗑️
                             </a>
-                        </td>
+                        </td> 
+                         <?php endif; ?>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
