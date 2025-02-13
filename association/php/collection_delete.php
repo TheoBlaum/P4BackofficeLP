@@ -1,7 +1,6 @@
 <?php
 require 'config.php';
 
-require 'config.php';
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = (int) $_GET['id'];
