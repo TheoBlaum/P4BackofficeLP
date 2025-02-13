@@ -24,6 +24,13 @@ $stmt_benevoles = $pdo->prepare("SELECT id, nom FROM benevoles ORDER BY nom");
 $stmt_benevoles->execute();
 $benevoles = $stmt_benevoles->fetchAll();
 
+
+// Récupérer la liste des déchets associés à la collecte
+$stmt_dechets = $pdo->prepare("SELECT id, type_dechet, quantite_kg FROM dechets_collectes WHERE id_collecte = ?");
+$stmt_dechets->execute([$id]);
+$dechets_collectes = $stmt_dechets->fetchAll();
+
+
 // Mettre à jour la collecte
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $date = $_POST["date"];
@@ -32,6 +39,44 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $stmt = $pdo->prepare("UPDATE collectes SET date_collecte = ?, lieu = ?, id_benevole = ? WHERE id = ?");
     $stmt->execute([$date, $lieu, $benevole_id, $id]);
+
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $date = $_POST["date"];
+        $lieu = $_POST["lieu"];
+        $benevole_id = $_POST["benevole"];
+        $id_collecte = $_GET['id'];
+    
+        $stmt = $pdo->prepare("UPDATE collectes SET date_collecte = ?, lieu = ?, id_benevole = ? WHERE id = ?");
+        $stmt->execute([$date, $lieu, $benevole_id, $id_collecte]);
+    
+        // Gestion des déchets
+        if (!empty($_POST["type_dechet"]) && is_numeric($_POST["quantite_kg"])) {
+            $type_dechet = $_POST["type_dechet"];
+            $quantite_kg = $_POST["quantite_kg"];
+            $action = $_POST["action"]; // "ajouter" ou "remplacer"
+    
+            // Vérifier si le déchet existe déjà pour cette collecte
+            $stmt = $pdo->prepare("SELECT quantite_kg FROM dechets_collectes WHERE id_collecte = ? AND type_dechet = ?");
+            $stmt->execute([$id_collecte, $type_dechet]);
+            $ancienneQuantite = $stmt->fetchColumn();
+    
+            if ($ancienneQuantite === false) {
+                // Insérer si le déchet n'existe pas encore
+                $stmt = $pdo->prepare("INSERT INTO dechets_collectes (type_dechet, quantite_kg, id_collecte) VALUES (?, ?, ?)");
+                $stmt->execute([$type_dechet, $quantite_kg, $id_collecte]);
+            } else {
+                // Ajouter ou remplacer la quantité
+                $nouvelleQuantite = ($action === "ajouter") ? ($ancienneQuantite + $quantite_kg) : $quantite_kg;
+                $stmt = $pdo->prepare("UPDATE dechets_collectes SET quantite_kg = ? WHERE id_collecte = ? AND type_dechet = ?");
+                $stmt->execute([$nouvelleQuantite, $id_collecte, $type_dechet]);
+            }
+        }
+    
+        header("Location: " . $_SERVER['PHP_SELF'] . "?id=" . $id_collecte);
+        exit;
+    }
+    
 
     
     // deuxieme requette pour mettre a jour les dechets
@@ -43,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt =  $pdo->prepare("INSERT INTO dechets_collectes (type_dechet, quantite_kg, id_collecte) VALUES (?, ?, ?)");
     $stmt->execute([$type_dechet, $quantite_kg, $id_collecte]);
 
-    header("Location: collection_list.php");
+    header("Location: collection_edit.php");
     exit;
 }
 
@@ -52,6 +97,7 @@ $stmt_dechets_collectes->execute();
 $dechets_collectes = $stmt_dechets_collectes->fetchAll();
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -117,25 +163,59 @@ $dechets_collectes = $stmt_dechets_collectes->fetchAll();
                 <label class="block text-sm font-medium text-gray-700">Dechets :</label>
                         <select id="type_dechet" name="type_dechet" required>
                             <option value="">Sélectionnez le type de dechet</option>
-                            <option value="Plastique">Plastique</option>
-                            <option value="Verre">Verre</option>
-                            <option value="Papier">Papier</option>
                             <option value="Métal">Métal</option>
                             <option value="Organiques">Organiques</option>
+                            <option value="Papier">Papier</option>
+                            <option value="Plastique">Plastique</option>
+                            <option value="Verre">Verre</option>
                         </select>
                     <label for="quantite_kg">Quantité (kg) :</label>
-                    <input type="number" id="quantite_kg" name="quantite_kg" min="0.1" step="0.1" required>
+                    <input type="number" id="quantite_kg" name="quantite_kg" step="1" required>
+
+                
+                    <label>Action :</label>
+                        <select name="action">
+                            <option value="ajouter">Ajouter</option>
+                            <option value="remplacer">Remplacer</option>
+                        </select> 
                 </div>
 
 
                 <div class="flex justify-end space-x-4">
-                    <a href="collection_list.php" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Annuler</a>
+                    <a href="collection_list.php" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Retour</a>
                     <button type="submit" class="bg-cyan-200 text-white px-4 py-2 rounded-lg">Modifier</button>
                 </div>
             </form>
         </div>
+
+
+     <!-- Tableau des déchets déjà enregistrés -->
+     <div class="mt-6 bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-4">Déchets enregistrés</h2>
+            <table class="w-full border-collapse border border-gray-300">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="border border-gray-300 px-4 py-2">Type de déchet</th>
+                        <th class="border border-gray-300 px-4 py-2">Quantité (kg)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($dechets_collectes as $dechet): ?>
+                        <tr>
+                            <td class="border border-gray-300 px-4 py-2"><?= htmlspecialchars($dechet['type_dechet']) ?></td>
+                            <td class="border border-gray-300 px-4 py-2"><?= htmlspecialchars($dechet['quantite_kg']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </div>
+
 <script src="logout.js"></script>
 </body>
 </html>
+
+
+   

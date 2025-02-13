@@ -9,6 +9,11 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]);
 
+        // Supprimer les déchets collectés liés aux collectes du bénévole
+        $stmt = $pdo->prepare("DELETE FROM dechets_collectes WHERE id_collecte IN (SELECT id FROM collectes WHERE id_benevole = :id)");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
         // Supprimer d'abord les collectes associées au bénévole
         $stmt = $pdo->prepare("DELETE FROM collectes WHERE id_benevole = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
