@@ -83,6 +83,6 @@ try {
             </div>
         </div>
     </div>
+    <script src="logout.js"></script>
 </body>
-
 </html>

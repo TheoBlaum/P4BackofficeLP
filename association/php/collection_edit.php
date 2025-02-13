@@ -136,6 +136,6 @@ $dechets_collectes = $stmt_dechets_collectes->fetchAll();
         </div>
     </div>
 </div>
-
+<script src="logout.js"></script>
 </body>
 </html>
