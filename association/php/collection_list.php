@@ -220,8 +220,14 @@ error_reporting(E_ALL);
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+                
             </div>
+            <?php if ($userRole === 'admin'): ?>
+    <a href="export_collectes.php" class="w-2/3 mt-10 bg-neutral-800 text-white hover:bg-neutral-700 hover:text-green-500 py-2 px-4 rounded  transition-colors duration-500 ">Exporter en CSV</a>
+<?php endif; ?>
+
         </div>
+        
     </div>
     <script src="logout.js"></script>
 </body>
