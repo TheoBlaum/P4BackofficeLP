@@ -18,7 +18,7 @@ error_reporting(E_ALL);
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nom = $_POST["nom"];
     $email = $_POST["email"];
-    $mot_de_passe = $_POST["mot_de_passe"];
+    $mot_de_passe = password_hash($_POST["mot_de_passe"], PASSWORD_DEFAULT); // Hashage du mot de passe
     $role = $_POST["role"];
 
     // Insérer la collecte avec le bénévole sélectionné

@@ -1,17 +1,5 @@
 <?php
-
-require 'config.php'; // Connexion à la base de données
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
-
-// Vérifiez le rôle de l'utilisateur connecté
-$userId = $_SESSION['user_id'];
-$query = $pdo->prepare("SELECT role FROM benevoles WHERE id = ?");
-$query->execute([$userId]);
-$user = $query->fetch(PDO::FETCH_ASSOC);
-$userRole = $user ? $user['role'] : null;
+require 'config.php';
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
@@ -22,7 +10,14 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $message = "";
 
-// Récupérer les informations de l'utilisateur connecté
+// Vérifiez le rôle de l'utilisateur connecté
+$userId = $_SESSION['user_id'];
+$query = $pdo->prepare("SELECT role FROM benevoles WHERE id = ?");
+$query->execute([$userId]);
+$user = $query->fetch(PDO::FETCH_ASSOC);
+$userRole = $user ? $user['role'] : null;
+
+// Récupérer les infos actuelles de l'utilisateur
 $stmt = $pdo->prepare("SELECT email, mot_de_passe FROM benevoles WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -33,38 +28,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Vérification du mot de passe actuel
+    // Vérifier le mot de passe actuel
     if (!password_verify($current_password, $user['mot_de_passe'])) {
         $message = "Mot de passe actuel incorrect.";
     } else {
-        $updates = [];
-        $params = [];
-
-        // Mise à jour de l'email si différent
-        if ($email !== $user['email']) {
-            $updates[] = "email = ?";
-            $params[] = $email;
-        }
+        // Mise à jour de l'email
+        $stmt = $pdo->prepare("UPDATE benevoles SET email = ? WHERE id = ?");
+        $stmt->execute([$email, $user_id]);
 
         // Mise à jour du mot de passe si un nouveau est fourni
-        if (!empty($new_password) && $new_password === $confirm_password) {
-            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-            $updates[] = "mot_de_passe = ?";
-            $params[] = $hashed_password;
-        } elseif (!empty($new_password) && $new_password !== $confirm_password) {
-            $message = "Les mots de passe ne correspondent pas.";
-        }
-
-        // Exécution de la mise à jour si des changements existent
-        if (!empty($updates) && empty($message)) {
-            $params[] = $user_id;
-            $sql = "UPDATE benevoles SET " . implode(", ", $updates) . " WHERE id = ?";
-            $stmt = $pdo->prepare($sql);
-            if ($stmt->execute($params)) {
-                $message = "Vos paramètres ont été mis à jour avec succès.";
+        if (!empty($new_password)) {
+            if ($new_password === $confirm_password) {
+                $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+                $stmt = $pdo->prepare("UPDATE benevoles SET mot_de_passe = ? WHERE id = ?");
+                $stmt->execute([$hashed_password, $user_id]);
+                $message = "Mise à jour réussie !";
             } else {
-                $message = "Erreur lors de la mise à jour.";
+                $message = "Les nouveaux mots de passe ne correspondent pas.";
             }
+        } else {
+            $message = "Email mis à jour avec succès.";
         }
     }
 }
@@ -175,7 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="flex justify-between items-center">
                     <a href="collection_list.php" class="text-sm text-white hover:underline">Retour à la liste des
                         collectes</a>
-                    <button type="button" onclick="updateSettings()"
+                    <button type="submit"
                         class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
                         Mettre à jour
                     </button>
