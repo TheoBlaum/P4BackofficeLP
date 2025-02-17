@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <h1 class="text-3xl font-bold text-white mb-6 text-center">Connexion</h1>
 
         <?php if (!empty($error)) : ?>
-            <div class="text-red-600 text-center mb-4">
+            <div class="text-red-400 text-center mb-4">
                 <?= htmlspecialchars($error) ?>
             </div>
         <?php endif; ?>

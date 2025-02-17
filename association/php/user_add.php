@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <!-- Contenu principal -->
         <div
-            class="flex-1 p-8 overflow-y-auto bg-gradient-to-tr from-neutral-950 to-neutral-800 w-72 p-6 rounded-2xl m-3 h-fit px-12 max-w-3xl mx-auto mt-48">
+            class="flex-1 p-8 overflow-y-auto bg-gradient-to-tr from-neutral-950 to-neutral-800 w-72 p-6 rounded-2xl m-3 h-fit px-12 max-w-3xl mx-auto mt-40">
             <h1 class="text-4xl font-bold max-w-xl mx-auto text-stone-500 mb-6">Ajouter un Bénévole</h1>
 
             <!-- Formulaire d'ajout -->

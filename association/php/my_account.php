@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div>
                     <label for="email" class="block text-sm mb-2 font-medium text-green-500">Email :</label>
                     <input type="email" name="email" id="email" placeholder="<?= htmlspecialchars($user['email']) ?>" required
-                        class="w-full p-2 border text-neutral-500 border-stone-400 bg-neutral-800 hover:bg-neutral-700 rounded-full focus:bg-neutral-700 transition-colors duration-500 placeholder-neutral-500">
+                        class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
                 </div>
 
                 <!-- Champ Mot de passe actuel -->
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="current_password" class="block text-sm mb-2 font-medium text-green-500">Mot de passe
                         actuel :</label>
                     <input type="password" name="current_password" id="current_password" required
-                        class="w-full p-2 border text-neutral-500 border-stone-400 bg-neutral-800 hover:bg-neutral-700 rounded-full focus:bg-neutral-700 transition-colors duration-500 placeholder-neutral-500">
+                        class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
                 </div>
 
                 <!-- Champ Nouveau Mot de passe -->
@@ -142,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="new_password" class="block text-sm mb-2 font-medium text-green-500">Nouveau mot de passe
                         :</label>
                     <input type="password" name="new_password" id="new_password"
-                        class="w-full p-2 border text-neutral-500 border-stone-400 bg-neutral-800 hover:bg-neutral-700 rounded-full focus:bg-neutral-700 transition-colors duration-500 placeholder-neutral-500">
+                        class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
                 </div>
 
                 <!-- Champ Confirmer le nouveau Mot de passe -->
@@ -151,8 +151,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         mot de
                         passe :</label>
                     <input type="password" name="confirm_password" id="confirm_password"
-                        class="w-full p-2 border text-neutral-500 border-stone-400 bg-neutral-800 hover:bg-neutral-700 rounded-full focus:bg-neutral-700 transition-colors duration-500 placeholder-neutral-500">
+                        class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
                 </div>
+                <style>
+                        input::placeholder {
+                            color: rgba(255, 255, 255);
+                        }
+                    </style>
 
                 <!-- Boutons -->
                 <div class="flex justify-between items-center">

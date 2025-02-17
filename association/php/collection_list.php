@@ -64,7 +64,7 @@ error_reporting(E_ALL);
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=0.80">
     <title>Liste des Collectes</title>
 
     <head>
@@ -87,16 +87,12 @@ error_reporting(E_ALL);
                 <li><a href="collection_list.php"
                         class="flex items-center py-2 px-3 hover:text-white transition-colors duration-500"><i
                             class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
-                <?php if ($userRole === 'admin'): ?>            
                 <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
-                <?php endif; ?>
                 <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
-                <?php if ($userRole === 'admin'): ?>
                 <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
-                <?php endif; ?>
                 <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-cogs mr-3"></i> Mon compte</a></li>
             </ul>
