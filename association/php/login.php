@@ -33,11 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>Connexion</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-black">
 
 <div class="flex justify-center items-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full sm:w-96">
-        <h1 class="text-3xl font-bold text-blue-900 mb-6 text-center">Connexion</h1>
+    <div class="bg-gradient-to-tr relative from-neutral-950 to-neutral-900 text-white w-72 p-6 rounded-2xl m-3 sm:w-96">
+        <h1 class="text-3xl font-bold text-white mb-6 text-center">Connexion</h1>
 
         <?php if (!empty($error)) : ?>
             <div class="text-red-600 text-center mb-4">
@@ -47,18 +47,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <form method="POST" class="space-y-6">
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                <input type="email" name="email" id="email" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                <label for="email" class="block text-sm font-medium mb-2 text-white">Email :</label>
+                <input type="email" name="email" id="email" required class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-4 rounded-lg shadow-xl max-w-xl mx-auto">
             </div>
 
             <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
-                <input type="password" name="password" id="password" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                <label for="password" class="block text-sm font-medium mb-2 text-white">Mot de passe :</label>
+                <input type="password" name="password" id="password" required class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-4 rounded-lg shadow-xl max-w-xl mx-auto mb-4">
             </div>
 
             <div class="flex justify-between items-center">
-                <a href="#" class="text-sm text-blue-600 hover:underline">Mot de passe oublié ?</a>
-                <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-2 rounded-lg shadow-md">
+                <a href="#" class="text-sm text-white hover:underline">Mot de passe oublié ?</a>
+                <button type="submit" class="bg-green-500 hover:bg-white text-stone-900 font-bold px-6 py-2 rounded-full shadow-md transition duration-200">
                     Se connecter
                 </button>
             </div>
