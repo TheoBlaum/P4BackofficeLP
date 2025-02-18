@@ -82,7 +82,8 @@ error_reporting(E_ALL);
         <!-- Barre de navigation -->
         <div class="fixed top-0 h-screen p-3">
             <div class="bg-gradient-to-tr h-full from-neutral-950 to-neutral-900 text-white w-72 p-6 rounded-2xl">
-                <h2 class="text-2xl font-bold mb-14 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
+                <h2
+                    class="text-2xl font-bold mb-14 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
                     Dashboard
                 </h2>
                 <ul class="space-y-11">
@@ -90,18 +91,18 @@ error_reporting(E_ALL);
                             class="flex items-center py-2 px-3 hover:text-white transition-colors duration-500"><i
                                 class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
                     <?php if ($userRole === 'admin'): ?>
-                    <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
+                        <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                    class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
                     <?php endif; ?>
                     <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fa-solid fa-message mr-3"></i> Message littoral propre</a></li>
+                                class="fa-solid fa-message mr-3"></i> Messagerie</a></li>
                      <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
                     <?php if ($userRole === 'admin'): ?>
-                    <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
+                        <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                    class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
                                 <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un Message</a></li>
+                                class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
                     <?php endif; ?>
                     <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fas fa-cogs mr-3"></i> Mon compte</a></li>
@@ -112,7 +113,7 @@ error_reporting(E_ALL);
                         Déconnexion
                     </button>
                 </div>
-                <div class="absolute bottom-10 left-10">
+                <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2">
                     <svg width="200" height="52" viewBox="0 0 1276 323" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M45.5556 0C45.5556 0 -56.9444 144.88 45.5556 144.88C148.056 144.88 154.556 144.88 154.556 144.88C173.799 129.027 181.5 123 183.442 121.5C176.5 125 61.7059 195.025 45.5556 0Z"
@@ -135,7 +136,7 @@ error_reporting(E_ALL);
         <div class="flex-1 ml-[324px]">
             <div class="bg-gradient-to-tr from-neutral-950 to-neutral-800 p-8 min-h-screen rounded-2xl m-3">
                 <!-- Titre -->
-                <h1 class="text-4xl font-bold text-stone-500 mb-6">Liste des Collectes de Déchets</h1>
+                <h1 class="text-4xl font-bold text-white mb-6">Liste des Collectes de Déchets</h1>
 
                 <!-- Message de notification -->
                 <?php if (isset($_GET['message'])): ?>
@@ -158,7 +159,8 @@ error_reporting(E_ALL);
                             class="bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl">
                             <h3 class="text-xl font-semibold text-white mb-3">Dernière Collecte</h3>
                             <p class="text-lg text-gray-400"><?= htmlspecialchars($collectes[0]['lieu']) ?></p>
-                            <p class="text-lg text-gray-400"><?= date('d/m/Y', strtotime($collectes[0]['date_collecte'])) ?></p>
+                            <p class="text-lg text-gray-400"><?= date('d/m/Y', strtotime($collectes[0]['date_collecte'])) ?>
+                            </p>
                         </div>
                     <?php endif; ?>
                     <!-- Bénévole Responsable -->
@@ -224,7 +226,8 @@ error_reporting(E_ALL);
                                     <td class="py-3 px-4 text-white font-bold"><?= $total ?> kg</td>
 
                                     <?php if ($userRole === 'admin'): ?>
-                                        <td class="py-3 px-4 flex space-x-2"><a href="collection_edit.php?id=<?= $collecte['id'] ?>"
+                                        <td class="py-3 px-4 flex space-x-2"><a
+                                                href="collection_edit.php?id=<?= $collecte['id'] ?>"
                                                 class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">Modifier</a>
                                             <a href="collection_delete.php?id=<?= $collecte['id'] ?>"
                                                 class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white  hover:text-red-500  px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200"
@@ -236,7 +239,7 @@ error_reporting(E_ALL);
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    
+
                     <?php if ($userRole === 'admin'): ?>
                         <div class="p-6 flex justify-end">
                             <a href="export_collectes.php"
@@ -248,17 +251,18 @@ error_reporting(E_ALL);
                 </div>
 
                 <!-- Graphique -->
-                <div class="overflow-hidden bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white w-1/2 rounded-lg shadow-xl p-6">
+                <div
+                    class="overflow-hidden bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white w-1/2 rounded-lg shadow-xl p-6">
                     <h2 class="text-xl font-semibold mb-4">Répartition des types de déchets collectés</h2>
-                    
+
                     <canvas id="radarChart"></canvas>
                     <?php if ($userRole === 'admin'): ?>
-                    <div class="mt-6 flex justify-end">
-                        <button onclick="downloadChart()" 
+                        <div class="mt-6 flex justify-end">
+                            <button onclick="downloadChart()"
                                 class="bg-neutral-800 text-white hover:bg-neutral-700 hover:text-green-500 py-2 px-4 rounded transition-colors duration-500">
-                            <i class="fas fa-download mr-2"></i>Exporter le graphique
-                        </button>
-                    </div>
+                                <i class="fas fa-download mr-2"></i>Exporter le graphique
+                            </button>
+                        </div>
                     <?php endif; ?>
 
                     <script>
@@ -272,19 +276,19 @@ error_reporting(E_ALL);
                                 label: 'Quantité totale (kg)',
                                 data: [
                                     <?php
-                                        $stmt = $pdo->query("SELECT type_dechet, SUM(quantite_kg) as total 
+                                    $stmt = $pdo->query("SELECT type_dechet, SUM(quantite_kg) as total 
                                                             FROM dechets_collectes 
                                                             GROUP BY type_dechet");
-                                        $totals = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                        $data = array();
-                                        foreach ($totals as $total) {
-                                            $data[$total['type_dechet']] = $total['total'];
-                                        }
-                                        echo $data['Plastique'] ?? 0, ", ";
-                                        echo $data['Verre'] ?? 0, ", ";
-                                        echo $data['Papier'] ?? 0, ", ";
-                                        echo $data['Métal'] ?? 0, ", ";
-                                        echo $data['Organiques'] ?? 0;
+                                    $totals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                    $data = array();
+                                    foreach ($totals as $total) {
+                                        $data[$total['type_dechet']] = $total['total'];
+                                    }
+                                    echo $data['Plastique'] ?? 0, ", ";
+                                    echo $data['Verre'] ?? 0, ", ";
+                                    echo $data['Papier'] ?? 0, ", ";
+                                    echo $data['Métal'] ?? 0, ", ";
+                                    echo $data['Organiques'] ?? 0;
                                     ?>
                                 ],
                                 backgroundColor: 'rgba(27, 183, 97, 0.2)',
@@ -336,14 +340,14 @@ error_reporting(E_ALL);
                         // Fonction pour télécharger le graphique
                         function downloadChart() {
                             const canvas = document.getElementById('radarChart');
-                            
+
                             // Créer un lien temporaire
                             const link = document.createElement('a');
                             link.download = 'repartition-dechets.png';
-                            
+
                             // Convertir le canvas en URL de données
                             link.href = canvas.toDataURL('image/png');
-                            
+
                             // Simuler un clic pour déclencher le téléchargement
                             document.body.appendChild(link);
                             link.click();

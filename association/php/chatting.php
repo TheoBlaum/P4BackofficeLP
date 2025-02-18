@@ -48,7 +48,8 @@ $messages = $query->fetchAll(PDO::FETCH_ASSOC);
         <!-- Barre de navigation -->
         <div class="fixed top-0 h-screen p-3">
             <div class="bg-gradient-to-tr h-full from-neutral-950 to-neutral-900 text-white w-72 p-6 rounded-2xl">
-                <h2 class="text-2xl font-bold mb-14 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
+                <h2
+                    class="text-2xl font-bold mb-14 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
                     Dashboard
                 </h2>
                 <ul class="space-y-11">
@@ -56,18 +57,18 @@ $messages = $query->fetchAll(PDO::FETCH_ASSOC);
                             class="flex items-center py-2 px-3 hover:text-white transition-colors duration-500"><i
                                 class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
                     <?php if ($userRole === 'admin'): ?>
-                    <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
+                        <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                    class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
                     <?php endif; ?>
                     <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                    class="fa-solid fa-message mr-3"></i> Message littoral propre</a></li>
+                                class="fa-solid fa-message mr-3"></i> Messagerie</a></li>
                     <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
                     <?php if ($userRole === 'admin'): ?>
-                    <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
-                                <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un Message</a></li>
+                        <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                    class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
+                        <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                    class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
                     <?php endif; ?>
                     <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fas fa-cogs mr-3"></i> Mon compte</a></li>
@@ -78,7 +79,7 @@ $messages = $query->fetchAll(PDO::FETCH_ASSOC);
                         Déconnexion
                     </button>
                 </div>
-                <div class="absolute bottom-10 left-10">
+                <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2">
                     <svg width="200" height="52" viewBox="0 0 1276 323" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M45.5556 0C45.5556 0 -56.9444 144.88 45.5556 144.88C148.056 144.88 154.556 144.88 154.556 144.88C173.799 129.027 181.5 123 183.442 121.5C176.5 125 61.7059 195.025 45.5556 0Z"
@@ -99,16 +100,21 @@ $messages = $query->fetchAll(PDO::FETCH_ASSOC);
 
         <!-- Contenu principal -->
         <div class="flex-1 ml-[324px]">
-             <div class="chat-container w-6/7 bg-gray-100 p-4 rounded-lg space-y-4 ">
-                <?php foreach ($messages as $msg): ?>
-                    <div class="bg-gradient-to-tr from-neutral-950 to-neutral-900 text-white p-6 space-y-4 rounded-2xl">
-                    <strong class="text-2xl font-bold mb-14 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent"><?= htmlspecialchars($msg['nom']) ?>:</strong>
-                    <p class="text-white-800"><?= htmlspecialchars($msg['message']) ?></p>
-                    <span class="text-xs text-gray-500"><?= $msg['created_at'] ?></span>
-                    </div>
-                <?php endforeach; ?>
+            <div class="bg-gradient-to-tr from-neutral-950 to-neutral-800 p-8 min-h-screen rounded-2xl m-3">
+                <h1 class="text-4xl font-bold text-white mb-6">Messages</h1>
+                <div
+                    class="bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl w-1/2 mb-8">
+                    <?php foreach ($messages as $msg): ?>
+                        <div
+                            class="bg-neutral-700/30 backdrop-blur-lg text-white p-6 rounded-lg shadow-xl mb-8">
+                            <strong class=" text-white"><?= htmlspecialchars($msg['nom']) ?></strong>
+                            <p class="text-white-800 p-2 break-words"><?= htmlspecialchars($msg['message']) ?></p>
+                            <span class="text-xs text-gray-500"><?= $msg['created_at'] ?></span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         </div>
-    </div>
 
 
     </div>

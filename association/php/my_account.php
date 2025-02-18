@@ -81,14 +81,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
                 <?php endif; ?> <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                            class="fa-solid fa-message mr-3"></i> Message littoral propre</a></li>
+                            class="fa-solid fa-message mr-3"></i> Messagerie</a></li>
                 <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
                 <?php if ($userRole === 'admin'): ?>
                 <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
                             <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                            class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un Message</a></li>
+                            class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
                 <?php endif; ?>
                 <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-cogs mr-3"></i> Mon compte</a></li>
@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     Déconnexion
                 </button>
             </div>
-            <div class="absolute bottom-10 left-10">
+            <div class="absolute bottom-9 left-1/2 transform -translate-x-1/2">
             <svg width="200" height="52" viewBox="0 0 1276 323" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M45.5556 0C45.5556 0 -56.9444 144.88 45.5556 144.88C148.056 144.88 154.556 144.88 154.556 144.88C173.799 129.027 181.5 123 183.442 121.5C176.5 125 61.7059 195.025 45.5556 0Z"
@@ -121,81 +121,84 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div
             class="flex-1 p-8 overflow-y-auto bg-gradient-to-tr from-neutral-950 to-neutral-800 w-72 p-6 rounded-2xl m-3 h-fit px-12">
             <!-- Titre -->
-            <h1 class="text-4xl font-bold text-stone-500 mb-6">Paramètres</h1>
+            <h1 class="text-4xl font-bold text-white mb-6">Paramètres</h1>
 
-        <!-- Affichage du message -->
-        <?php if (!empty($message)): ?>
-            <div class="text-center mb-4 <?= strpos($message, 'succès') !== false ? 'text-green-600' : 'text-red-600' ?>">
-                <?= htmlspecialchars($message) ?>
+            <!-- Affichage du message -->
+            <?php if (!empty($message)): ?>
+                <div class="text-center mb-4 <?= strpos($message, 'succès') !== false ? 'text-green-600' : 'text-red-600' ?>">
+                    <?= htmlspecialchars($message) ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="flex gap-8">
+                <form method="post"
+                    class="flex-1 space-y-6 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl mb-8">
+                    <!-- Champ Email -->
+                    <div>
+                        <label for="email" class="block text-sm mb-2 font-medium text-green-500">Email :</label>
+                        <input type="email" name="email" id="email" placeholder="<?= htmlspecialchars($user['email']) ?>" required
+                            class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
+                    </div>
+
+                    <!-- Champ Mot de passe actuel -->
+                    <div>
+                        <label for="current_password" class="block text-sm mb-2 font-medium text-green-500">Mot de passe
+                            actuel :</label>
+                        <input type="password" name="current_password" id="current_password" required
+                            class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
+                    </div>
+
+                    <!-- Champ Nouveau Mot de passe -->
+                    <div>
+                        <label for="new_password" class="block text-sm mb-2 font-medium text-green-500">Nouveau mot de passe
+                            :</label>
+                        <input type="password" name="new_password" id="new_password"
+                            class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
+                    </div>
+
+                    <!-- Champ Confirmer le nouveau Mot de passe -->
+                    <div>
+                        <label for="confirm_password" class="block text-sm mb-2  font-medium text-green-500">Confirmer le
+                            mot de
+                            passe :</label>
+                        <input type="password" name="confirm_password" id="confirm_password"
+                            class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
+                    </div>
+                    <style>
+                            input::placeholder {
+                                color: rgba(255, 255, 255);
+                            }
+                        </style>
+
+                    <!-- Boutons -->
+                    <div class="flex justify-between items-center">
+                        <a href="collection_list.php" class="text-sm text-neutral-400 hover:underline">Retour à la liste des
+                            collectes</a>
+                        <button type="submit"
+                            class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                            Mettre à jour
+                        </button>
+                    </div>
+                </form>
+
+                <!-- SVG déplacé ici -->
+                <div class="w-72 flex items-center">
+                    <svg width="291" height="196" viewBox="0 0 291 196" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M46.8762 92.9629C49.0109 88.0423 55.9891 88.0423 58.1238 92.9629V92.9629C59.6946 96.5835 64.2275 97.7981 67.3982 95.4479V95.4479C71.7072 92.254 77.7505 95.7431 77.139 101.072V101.072C76.689 104.993 80.0073 108.311 83.9282 107.861V107.861C89.257 107.25 92.746 113.293 89.5521 117.602V117.602C87.2019 120.772 88.4165 125.305 92.0371 126.876V126.876C96.9577 129.011 96.9577 135.989 92.0371 138.124V138.124C88.4165 139.695 87.2019 144.228 89.5521 147.398V147.398C92.746 151.707 89.257 157.75 83.9282 157.139V157.139C80.0073 156.689 76.689 160.007 77.139 163.928V163.928C77.7505 169.257 71.7072 172.746 67.3982 169.552V169.552C64.2275 167.202 59.6946 168.417 58.1238 172.037V172.037C55.9891 176.958 49.0109 176.958 46.8762 172.037V172.037C45.3054 168.417 40.7725 167.202 37.6018 169.552V169.552C33.2928 172.746 27.2495 169.257 27.861 163.928V163.928C28.311 160.007 24.9927 156.689 21.0718 157.139V157.139C15.7431 157.75 12.254 151.707 15.4479 147.398V147.398C17.7981 144.228 16.5835 139.695 12.9629 138.124V138.124C8.0423 135.989 8.0423 129.011 12.9629 126.876V126.876C16.5835 125.305 17.7981 120.772 15.4479 117.602V117.602C12.254 113.293 15.743 107.25 21.0718 107.861V107.861C24.9927 108.311 28.311 104.993 27.861 101.072V101.072C27.2495 95.743 33.2928 92.254 37.6018 95.4479V95.4479C40.7725 97.7981 45.3054 96.5835 46.8762 92.9629V92.9629Z"
+                            fill="#1BB761" />
+                        <path
+                            d="M131.883 31.866C133.578 24.6555 143.062 22.9448 147.169 29.1086V29.1086C150.192 33.644 156.65 34.1834 160.382 30.2122V30.2122C165.455 24.8152 174.524 28.0754 174.999 35.4671V35.4671C175.349 40.906 180.672 44.6022 185.89 43.0295V43.0295C192.982 40.892 199.205 48.2496 195.921 54.8887V54.8887C193.504 59.7737 196.266 65.6363 201.572 66.8834V66.8834C208.782 68.5783 210.493 78.0617 204.329 82.1692V82.1692C199.794 85.1915 199.255 91.6496 203.226 95.3824V95.3824C208.623 100.455 205.363 109.524 197.971 109.999V109.999C192.532 110.349 188.836 115.672 190.408 120.89V120.89C192.546 127.982 185.188 134.205 178.549 130.921V130.921C173.664 128.504 167.802 131.266 166.555 136.572V136.572C164.86 143.782 155.376 145.493 151.269 139.329V139.329C148.246 134.794 141.788 134.255 138.056 138.226V138.226C132.983 143.623 123.914 140.363 123.439 132.971V132.971C123.089 127.532 117.766 123.836 112.548 125.408V125.408C105.456 127.546 99.2326 120.188 102.517 113.549V113.549C104.934 108.664 102.172 102.802 96.8661 101.555V101.555C89.6556 99.8597 87.9448 90.3762 94.1086 86.2687V86.2687C98.644 83.2464 99.1834 76.7883 95.2122 73.0555V73.0555C89.8152 67.9825 93.0754 58.9142 100.467 58.4389V58.4389C105.906 58.0892 109.602 52.7661 108.029 47.5478V47.5478C105.892 40.4559 113.25 34.2326 119.889 37.5169V37.5169C124.774 39.9335 130.636 37.1716 131.883 31.866V31.866Z"
+                            fill="#1BB761" />
+                        <path
+                            d="M232.876 103.963C235.011 99.0423 241.989 99.0423 244.124 103.963V103.963C245.695 107.583 250.228 108.798 253.398 106.448V106.448C257.707 103.254 263.75 106.743 263.139 112.072V112.072C262.689 115.993 266.007 119.311 269.928 118.861V118.861C275.257 118.25 278.746 124.293 275.552 128.602V128.602C273.202 131.772 274.417 136.305 278.037 137.876V137.876C282.958 140.011 282.958 146.989 278.037 149.124V149.124C274.417 150.695 273.202 155.228 275.552 158.398V158.398C278.746 162.707 275.257 168.75 269.928 168.139V168.139C266.007 167.689 262.689 171.007 263.139 174.928V174.928C263.75 180.257 257.707 183.746 253.398 180.552V180.552C250.228 178.202 245.695 179.417 244.124 183.037V183.037C241.989 187.958 235.011 187.958 232.876 183.037V183.037C231.305 179.417 226.772 178.202 223.602 180.552V180.552C219.293 183.746 213.25 180.257 213.861 174.928V174.928C214.311 171.007 210.993 167.689 207.072 168.139V168.139C201.743 168.75 198.254 162.707 201.448 158.398V158.398C203.798 155.228 202.583 150.695 198.963 149.124V149.124C194.042 146.989 194.042 140.011 198.963 137.876V137.876C202.583 136.305 203.798 131.772 201.448 128.602V128.602C198.254 124.293 201.743 118.25 207.072 118.861V118.861C210.993 119.311 214.311 115.993 213.861 112.072V112.072C213.25 106.743 219.293 103.254 223.602 106.448V106.448C226.772 108.798 231.305 107.583 232.876 103.963V103.963Z"
+                            fill="white" />
+                    </svg>
+                </div>
             </div>
-        <?php endif; ?>
-
-            <form method="post"
-                class="space-y-6 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl mb-8">
-                <!-- Champ Email -->
-                <div>
-                    <label for="email" class="block text-sm mb-2 font-medium text-green-500">Email :</label>
-                    <input type="email" name="email" id="email" placeholder="<?= htmlspecialchars($user['email']) ?>" required
-                        class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
-                </div>
-
-                <!-- Champ Mot de passe actuel -->
-                <div>
-                    <label for="current_password" class="block text-sm mb-2 font-medium text-green-500">Mot de passe
-                        actuel :</label>
-                    <input type="password" name="current_password" id="current_password" required
-                        class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
-                </div>
-
-                <!-- Champ Nouveau Mot de passe -->
-                <div>
-                    <label for="new_password" class="block text-sm mb-2 font-medium text-green-500">Nouveau mot de passe
-                        :</label>
-                    <input type="password" name="new_password" id="new_password"
-                        class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
-                </div>
-
-                <!-- Champ Confirmer le nouveau Mot de passe -->
-                <div>
-                    <label for="confirm_password" class="block text-sm mb-2  font-medium text-green-500">Confirmer le
-                        mot de
-                        passe :</label>
-                    <input type="password" name="confirm_password" id="confirm_password"
-                        class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
-                </div>
-                <style>
-                        input::placeholder {
-                            color: rgba(255, 255, 255);
-                        }
-                    </style>
-
-                <!-- Boutons -->
-                <div class="flex justify-between items-center">
-                    <a href="collection_list.php" class="text-sm text-white hover:underline">Retour à la liste des
-                        collectes</a>
-                    <button type="submit"
-                        class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
-                        Mettre à jour
-                    </button>
-                </div>
-            </form>
-        </div>
-        <div class="absolute bottom-20 left-[57%] transform -translate-x-1/2">
-            <svg width="291" height="196" viewBox="0 0 291 196" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M46.8762 92.9629C49.0109 88.0423 55.9891 88.0423 58.1238 92.9629V92.9629C59.6946 96.5835 64.2275 97.7981 67.3982 95.4479V95.4479C71.7072 92.254 77.7505 95.7431 77.139 101.072V101.072C76.689 104.993 80.0073 108.311 83.9282 107.861V107.861C89.257 107.25 92.746 113.293 89.5521 117.602V117.602C87.2019 120.772 88.4165 125.305 92.0371 126.876V126.876C96.9577 129.011 96.9577 135.989 92.0371 138.124V138.124C88.4165 139.695 87.2019 144.228 89.5521 147.398V147.398C92.746 151.707 89.257 157.75 83.9282 157.139V157.139C80.0073 156.689 76.689 160.007 77.139 163.928V163.928C77.7505 169.257 71.7072 172.746 67.3982 169.552V169.552C64.2275 167.202 59.6946 168.417 58.1238 172.037V172.037C55.9891 176.958 49.0109 176.958 46.8762 172.037V172.037C45.3054 168.417 40.7725 167.202 37.6018 169.552V169.552C33.2928 172.746 27.2495 169.257 27.861 163.928V163.928C28.311 160.007 24.9927 156.689 21.0718 157.139V157.139C15.7431 157.75 12.254 151.707 15.4479 147.398V147.398C17.7981 144.228 16.5835 139.695 12.9629 138.124V138.124C8.0423 135.989 8.0423 129.011 12.9629 126.876V126.876C16.5835 125.305 17.7981 120.772 15.4479 117.602V117.602C12.254 113.293 15.743 107.25 21.0718 107.861V107.861C24.9927 108.311 28.311 104.993 27.861 101.072V101.072C27.2495 95.743 33.2928 92.254 37.6018 95.4479V95.4479C40.7725 97.7981 45.3054 96.5835 46.8762 92.9629V92.9629Z"
-                    fill="#1BB761" />
-                <path
-                    d="M131.883 31.866C133.578 24.6555 143.062 22.9448 147.169 29.1086V29.1086C150.192 33.644 156.65 34.1834 160.382 30.2122V30.2122C165.455 24.8152 174.524 28.0754 174.999 35.4671V35.4671C175.349 40.906 180.672 44.6022 185.89 43.0295V43.0295C192.982 40.892 199.205 48.2496 195.921 54.8887V54.8887C193.504 59.7737 196.266 65.6363 201.572 66.8834V66.8834C208.782 68.5783 210.493 78.0617 204.329 82.1692V82.1692C199.794 85.1915 199.255 91.6496 203.226 95.3824V95.3824C208.623 100.455 205.363 109.524 197.971 109.999V109.999C192.532 110.349 188.836 115.672 190.408 120.89V120.89C192.546 127.982 185.188 134.205 178.549 130.921V130.921C173.664 128.504 167.802 131.266 166.555 136.572V136.572C164.86 143.782 155.376 145.493 151.269 139.329V139.329C148.246 134.794 141.788 134.255 138.056 138.226V138.226C132.983 143.623 123.914 140.363 123.439 132.971V132.971C123.089 127.532 117.766 123.836 112.548 125.408V125.408C105.456 127.546 99.2326 120.188 102.517 113.549V113.549C104.934 108.664 102.172 102.802 96.8661 101.555V101.555C89.6556 99.8597 87.9448 90.3762 94.1086 86.2687V86.2687C98.644 83.2464 99.1834 76.7883 95.2122 73.0555V73.0555C89.8152 67.9825 93.0754 58.9142 100.467 58.4389V58.4389C105.906 58.0892 109.602 52.7661 108.029 47.5478V47.5478C105.892 40.4559 113.25 34.2326 119.889 37.5169V37.5169C124.774 39.9335 130.636 37.1716 131.883 31.866V31.866Z"
-                    fill="#1BB761" />
-                <path
-                    d="M232.876 103.963C235.011 99.0423 241.989 99.0423 244.124 103.963V103.963C245.695 107.583 250.228 108.798 253.398 106.448V106.448C257.707 103.254 263.75 106.743 263.139 112.072V112.072C262.689 115.993 266.007 119.311 269.928 118.861V118.861C275.257 118.25 278.746 124.293 275.552 128.602V128.602C273.202 131.772 274.417 136.305 278.037 137.876V137.876C282.958 140.011 282.958 146.989 278.037 149.124V149.124C274.417 150.695 273.202 155.228 275.552 158.398V158.398C278.746 162.707 275.257 168.75 269.928 168.139V168.139C266.007 167.689 262.689 171.007 263.139 174.928V174.928C263.75 180.257 257.707 183.746 253.398 180.552V180.552C250.228 178.202 245.695 179.417 244.124 183.037V183.037C241.989 187.958 235.011 187.958 232.876 183.037V183.037C231.305 179.417 226.772 178.202 223.602 180.552V180.552C219.293 183.746 213.25 180.257 213.861 174.928V174.928C214.311 171.007 210.993 167.689 207.072 168.139V168.139C201.743 168.75 198.254 162.707 201.448 158.398V158.398C203.798 155.228 202.583 150.695 198.963 149.124V149.124C194.042 146.989 194.042 140.011 198.963 137.876V137.876C202.583 136.305 203.798 131.772 201.448 128.602V128.602C198.254 124.293 201.743 118.25 207.072 118.861V118.861C210.993 119.311 214.311 115.993 213.861 112.072V112.072C213.25 106.743 219.293 103.254 223.602 106.448V106.448C226.772 108.798 231.305 107.583 232.876 103.963V103.963Z"
-                    fill="white" />
-            </svg>
         </div>
     </div>
-</div>
-<script src="logout.js"></script>
+    <script src="logout.js"></script>
 </body>
 
 </html>

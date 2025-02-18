@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </div>
 
                     <div class="flex justify-between items-center">
-                        <a href="#" class="text-sm text-white hover:underline">Mot de passe oublié ?</a>
+                        <a href="#" class="text-sm text-neutral-400 hover:underline">Mot de passe oublié ?</a>
                         <button type="submit"
                             class="bg-green-500 hover:bg-white text-stone-900 font-bold px-6 py-2 rounded-full shadow-md transition duration-200">
                             Se connecter

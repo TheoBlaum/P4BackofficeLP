@@ -48,7 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Barre de navigation -->
         <div class="fixed top-0 h-screen p-3">
             <div class="bg-gradient-to-tr h-full from-neutral-950 to-neutral-900 text-white w-72 p-6 rounded-2xl">
-                <h2 class="text-2xl font-bold mb-14 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
+                <h2
+                    class="text-2xl font-bold mb-14 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
                     Dashboard
                 </h2>
                 <ul class="space-y-11">
@@ -56,17 +57,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             class="flex items-center py-2 px-3 hover:text-white transition-colors duration-500"><i
                                 class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
                     <?php if ($userRole === 'admin'): ?>
-                    <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
-                    <?php endif; ?> <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fa-solid fa-message mr-3"></i> Message littoral propre</a></li>
+                        <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                    class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
+                    <?php endif; ?>
+                    <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                class="fa-solid fa-message mr-3"></i> Messagerie</a></li>
                     <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
                     <?php if ($userRole === 'admin'): ?>
-                    <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
-                                <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un Message</a></li>
+                        <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                    class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
+                        <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                    class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
                     <?php endif; ?>
                     <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fas fa-cogs mr-3"></i> Mon compte</a></li>
@@ -77,7 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         Déconnexion
                     </button>
                 </div>
-                <div class="absolute bottom-10 left-10">
+
+                <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2">
                     <svg width="200" height="52" viewBox="0 0 1276 323" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M45.5556 0C45.5556 0 -56.9444 144.88 45.5556 144.88C148.056 144.88 154.556 144.88 154.556 144.88C173.799 129.027 181.5 123 183.442 121.5C176.5 125 61.7059 195.025 45.5556 0Z"
@@ -96,15 +99,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
 
-             <!-- Contenu principal -->
-             <div class="ml-80 container">
-    <form method="POST" class="mt-4 space-y-4">
-        <textarea name="message" class="border rounded p-3 w-full h-32 resize-none" placeholder="Type your message..." rows="4"></textarea>
-        <button type="submit" class="w-full bg-neutral-800 text-white hover:bg-neutral-700 hover:text-green-500 py-3 px-4 rounded transition-colors duration-500">
-            Send
-        </button>
-    </form>
-</div>
+        <!-- Contenu principal -->
+        <div class="ml-[300px] flex justify-center w-[calc(100%-300px)]">
+            <div
+                class="p-8 overflow-y-auto bg-gradient-to-tr from-neutral-950 to-neutral-800 p-6 rounded-2xl m-3 h-fit px-12 w-[700px] mt-40">
+                <h1 class="text-4xl font-bold text-white mb-6">Envoyer un Message</h1>
+                <div class="bg-neutral-900/30 backdrop-blur-lg border border-white/20 p-6 rounded-lg shadow-xl">
+                    <form method="POST" class="mt-4 space-y-4">
+                        <textarea name="message" class="border rounded p-3 w-full h-40 resize-none"
+                            placeholder="Écrivez votre message..." rows="4"></textarea>
+                        <div class="p-2 flex items-center justify-between">
+                            <a href="#" class="text-sm text-neutral-400 hover:underline">En envoyant ce message vous
+                                acceptez notre politique de traitement des données personnelles.</a>
+                            <button type="submit"
+                                class="bg-neutral-800 text-white hover:bg-neutral-700 hover:text-green-500 py-2 px-4 m-3 rounded transition-colors duration-500 flex items-center">
+                                <i class="fas fa-paper-plane mr-2"></i>Poster
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-20 left-3/4 transform -translate-x-1/2">
+            <svg width="346" height="224" viewBox="0 0 346 224" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M337.744 6.7781L239.654 55.4108C235.824 57.3013 235.969 62.4755 239.548 64.2585L260.683 74.7301L322.608 26.7315C323.794 25.8019 325.29 27.4333 324.257 28.5365L271.29 85.359L270.256 101.793C269.952 106.611 275.653 108.876 278.732 105.565L292.693 90.6005L317.467 102.859C320.29 104.266 323.713 102.658 324.44 99.5675L344.695 12.2987C345.649 8.21853 341.405 4.95894 337.744 6.7781Z"
+                    fill="white" />
+                <path
+                    d="M252.629 135C245.211 170.234 208.587 201.455 173.816 207.211C151.873 210.844 124.971 211.468 105.25 199.715C92.7589 192.271 81.6835 177.454 87.9879 162.371C94.4374 146.942 110.598 139.938 126.569 142.084C134.793 143.188 142.83 149.025 144.381 157.557C147.133 172.694 132.096 183.983 121.205 191.325C110.515 198.531 98.5838 204.483 86.1998 208.174C60.9593 215.696 35.8424 212.732 10 212.988"
+                    stroke="#1BB761" stroke-width="20" stroke-linecap="round" />
+            </svg>
+        </div>
 
 
     </div>

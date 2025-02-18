@@ -5,7 +5,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = (int) $_GET['id'];
 
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=gestion_collectes", "root", "", [
+        $pdo = new PDO("mysql:host=localhost;dbname=gestion_collectes", "superadmin", "superpassword", [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]);
 
