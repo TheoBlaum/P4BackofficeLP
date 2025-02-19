@@ -110,13 +110,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
                 <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
-                            <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fa-solid fa-message mr-3"></i> Messagerie</a></li>
                 <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
                 <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
-                            <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
                 <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-cogs mr-3"></i> Mon compte</a></li>
@@ -233,9 +233,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <?php foreach ($dechets_collectes as $dechet): ?>
                                 <tr>
                                     <td class="hover:bg-neutral-800 transition duration-500 ease-in-out px-4 py-2">
-                                        <?= htmlspecialchars($dechet['type_dechet']) ?></td>
+                                        <?= htmlspecialchars($dechet['type_dechet']) ?>
+                                    </td>
                                     <td class="hover:bg-neutral-800 transition duration-500 ease-in-out px-4 py-2">
-                                        <?= htmlspecialchars($dechet['quantite_kg']) ?></td>
+                                        <?= htmlspecialchars($dechet['quantite_kg']) ?>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

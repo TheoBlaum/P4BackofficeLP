@@ -101,15 +101,15 @@ error_reporting(E_ALL);
                     <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fa-solid fa-message mr-3"></i> Messagerie</a></li>
 
-                     <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                    <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
 
                     <?php if ($userRole === 'admin'): ?>
                         <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                     class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
-
-                                <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
+                  
+                        <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                    class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
                     <?php endif; ?>
                       
                     <?php if ($userRole === 'admin'): ?>
