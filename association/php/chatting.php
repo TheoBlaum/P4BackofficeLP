@@ -105,8 +105,7 @@ $messages = $query->fetchAll(PDO::FETCH_ASSOC);
                 <div
                     class="bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl w-1/2 mb-8">
                     <?php foreach ($messages as $msg): ?>
-                        <div
-                            class="bg-neutral-700/30 backdrop-blur-lg text-white p-6 rounded-lg shadow-xl mb-8">
+                        <div class="bg-neutral-700/30 backdrop-blur-lg text-white p-6 rounded-lg shadow-xl mb-8">
                             <strong class=" text-white"><?= htmlspecialchars($msg['nom']) ?></strong>
                             <p class="text-white-800 p-2 break-words"><?= htmlspecialchars($msg['message']) ?></p>
                             <span class="text-xs text-gray-500"><?= $msg['created_at'] ?></span>

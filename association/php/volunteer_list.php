@@ -54,21 +54,21 @@ try {
                 <li><a href="collection_list.php"
                         class="flex items-center py-2 px-3 hover:text-white transition-colors duration-500"><i
                             class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
-                <?php if ($userRole === 'admin'): ?> 
-            <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                            class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
+                <?php if ($userRole === 'admin'): ?>
+                    <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
                 <?php endif; ?>
                 <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                class="fa-solid fa-message mr-3"></i> Messagerie</a></li>
-            <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                            class="fa-solid fa-message mr-3"></i> Messagerie</a></li>
+                <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
-                <?php if ($userRole === 'admin'): ?> 
-            <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                            class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
-                            <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                <?php if ($userRole === 'admin'): ?>
+                    <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
+                    <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
-                 <?php endif; ?>
-            <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                <?php endif; ?>
+                <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-cogs mr-3"></i> Mon compte</a></li>
             </ul>
             <div class="mt-6">
@@ -96,22 +96,24 @@ try {
         </div>
 
         <!-- Contenu principal -->
-        <div class="flex-1 p-8 overflow-y-auto bg-gradient-to-tr from-neutral-950 to-neutral-800 w-72 p-6 rounded-2xl m-3 h-fit px-12">
+        <div
+            class="flex-1 p-8 overflow-y-auto bg-gradient-to-tr from-neutral-950 to-neutral-800 w-72 p-6 rounded-2xl m-3 h-fit px-12">
             <!-- Titre -->
             <h1 class="text-4xl font-bold text-white mb-6">Liste des Bénévoles</h1>
 
             <!-- Tableau des bénévoles -->
-            <div class="overflow-hidden bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white  mb-8 rounded-lg shadow-xl">
+            <div
+                class="overflow-hidden bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white  mb-8 rounded-lg shadow-xl">
                 <table class="w-full table-auto border-collapse">
                     <thead class="bg-gradient-to-tr from-green-500 to-emerald-600 text-neutral-950">
                         <tr>
                             <th class="py-3 px-4 text-left">Nom</th>
-                            <?php if ($userRole === 'admin'): ?> 
-                            <th class="py-3 px-4 text-left">Email</th> <?php endif; ?>
+                            <?php if ($userRole === 'admin'): ?>
+                                <th class="py-3 px-4 text-left">Email</th> <?php endif; ?>
                             <th class="py-3 px-4 text-left">Rôle</th>
                             <th class="py-3 px-4 text-left">Total Déchets Collectés</th>
-                            <?php if ($userRole === 'admin'): ?>  
-                            <th class="py-3 px-4 text-left">Actions</th>
+                            <?php if ($userRole === 'admin'): ?>
+                                <th class="py-3 px-4 text-left">Actions</th>
                             <?php endif; ?>
                         </tr>
                     </thead>
@@ -119,17 +121,20 @@ try {
                         <?php foreach ($benevoles as $benevole): ?>
                             <tr class="hover:bg-neutral-800 transition duration-500 ease-in-out">
                                 <td class="py-3 px-4 "><?= htmlspecialchars($benevole['nom']) ?></td>
-                                <?php if ($userRole === 'admin'): ?> 
-                                <td class="py-3 px-4 text-stone-400"><?= htmlspecialchars($benevole['email']) ?></td>
-                                 <?php endif; ?>
+                                <?php if ($userRole === 'admin'): ?>
+                                    <td class="py-3 px-4 text-stone-400"><?= htmlspecialchars($benevole['email']) ?></td>
+                                <?php endif; ?>
                                 <td class="py-3 px-4 text-stone-400"><?= htmlspecialchars($benevole['role']) ?></td>
                                 <td class="py-3 px-4 font-bold"><?= number_format($benevole['total_dechets'], 2) ?> kg</td>
-                                <?php if ($userRole === 'admin'): ?> 
-                                <td class="py-3 px-4 flex space-x-2">
-                                    <a href="volunteer_edit.php?id=<?= $benevole['id'] ?>" class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">Modifier</a>
-                                    <a href="volunteer_delete.php?id=<?= $benevole['id'] ?>" class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white  hover:text-red-500  px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200" onclick="return confirm('Voulez-vous vraiment supprimer ce bénévole ?')">Supprimer</a>
-                                </td>
-                                 <?php endif; ?>
+                                <?php if ($userRole === 'admin'): ?>
+                                    <td class="py-3 px-4 flex space-x-2">
+                                        <a href="volunteer_edit.php?id=<?= $benevole['id'] ?>"
+                                            class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">Modifier</a>
+                                        <a href="volunteer_delete.php?id=<?= $benevole['id'] ?>"
+                                            class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white  hover:text-red-500  px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200"
+                                            onclick="return confirm('Voulez-vous vraiment supprimer ce bénévole ?')">Supprimer</a>
+                                    </td>
+                                <?php endif; ?>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -139,4 +144,5 @@ try {
     </div>
     <script src="logout.js"></script>
 </body>
+
 </html>
