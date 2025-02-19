@@ -39,12 +39,7 @@ $total = $stmt2->fetch(PDO::FETCH_ASSOC)['total'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.80">
     <title>Liste des Collectes</title>
-
-    <head>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Lora:wght@400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@300;400;700&family=Poppins:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;700&family=Nunito:wght@300;400;700&family=Merriweather:wght@300;400;700&family=Oswald:wght@300;400;700&display=swap"
-            rel="stylesheet">
-    </head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Lora:wght@400;700&family=Montserrat:wght@300;400;700&family=Open+Sans:wght@300;400;700&family=Poppins:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;700&family=Nunito:wght@300;400;700&family=Merriweather:wght@300;400;700&family=Oswald:wght@300;400;700&display=swap"rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -188,11 +183,11 @@ $total = $stmt2->fetch(PDO::FETCH_ASSOC)['total'];
                             <td class="py-3 px-4 text-stone-400"><?php echo htmlspecialchars($row['commentaire']); ?></td>
                         </tr>
                     <?php endforeach; ?>
-                <!-- <?php else : ?>
+                <?php endif; ?>
                     <tr>
-                        <td colspan="5" class="text-center p-4">Aucune transaction enregistrée.</td>
+                        <!-- <td colspan="5" class="text-center p-4">Aucune transaction enregistrée.</td> -->
                     </tr>
-                <?php endif; ?> -->
+                <?php endif; ?>
             </tbody>
                     </table>
                 </div>
