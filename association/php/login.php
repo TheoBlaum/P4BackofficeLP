@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <body class="bg-[url('img/imageback.png')] bg-cover bg-center h-screen w-full overflow-hidden">
 
-    <div class="bg-neutral-900/40 backdrop-blur text-white p-6 shadow-xl">
+    <div class="bg-neutral-700/40 text-white p-6 shadow-xl">
         <div class="absolute top-20  left-1/2 transform -translate-x-1/2  ">
             <svg width="638" height="161" viewBox="0 0 1276 323" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
