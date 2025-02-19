@@ -114,7 +114,7 @@ error_reporting(E_ALL);
                       
                     <?php if ($userRole === 'admin'): ?>
                          <li><a href="budget.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                  class="fas fa-cogs mr-3"></i> Budget</a></li>
+                                  class="fas fa-coins mr-3"></i> Budget</a></li>
                     <?php endif; ?>
 
 
