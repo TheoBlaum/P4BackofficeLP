@@ -22,8 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $role = $_POST["role"];
 
     // Insérer la collecte avec le bénévole sélectionné
-    $stmt = $pdo->prepare("INSERT INTO benevoles (nom, email, mot_de_passe,role) VALUES (?, ?, ?, ?)");
-    if (!$stmt->execute([$nom, $email, $mot_de_passe, $role])) {
+    $stmt = $pdo->prepare(query: "INSERT INTO benevoles (nom, email, mot_de_passe,role) VALUES (?, ?, ?, ?)");
+    if (!$stmt->execute(params: [$nom, $email, $mot_de_passe, $role])) {
         die('Erreur lors de l\'insertion dans la base de données.');
     }
 
@@ -66,6 +66,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
                 <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
+
+                            <li><a href="budget.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                            class="fas fa-cogs mr-3"></i> Budget</a></li>
+
                 <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-cogs mr-3"></i> Mon compte</a></li>
             </ul>

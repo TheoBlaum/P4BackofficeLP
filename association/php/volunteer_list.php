@@ -67,8 +67,16 @@ try {
                                 class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
                     <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
-                <?php endif; ?>
-                <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+
+                 <?php endif; ?>
+
+                 <?php if ($userRole === 'admin'): ?>
+                         <li><a href="budget.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                  class="fas fa-cogs mr-3"></i> Budget</a></li>
+                    <?php endif; ?>
+
+            <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+
                             class="fas fa-cogs mr-3"></i> Mon compte</a></li>
             </ul>
             <div class="mt-6">
