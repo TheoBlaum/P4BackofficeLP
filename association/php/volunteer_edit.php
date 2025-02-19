@@ -1,6 +1,6 @@
 <?php
 require 'config.php';
-$roles = ['admin','participant'];
+$roles = ['admin', 'participant'];
 // Vérifier si un ID de benevoles est fourni
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: volunteer_list.php");
@@ -30,13 +30,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $pdo->prepare("UPDATE benevoles SET nom = ?, email = ?, role = ? WHERE id = ?");
     $stmt->execute([$nom, $email, $role, $id]);
 
-    header("Location: volunteer_list.php"); 
+    header("Location: volunteer_list.php");
     exit;
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,11 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-black">
 
-<div class="flex h-screen">
-    <!-- Dashboard -->
-    <div class="bg-gradient-to-tr relative from-neutral-950 to-neutral-900 text-white w-72 p-6 rounded-2xl m-3">
+    <div class="flex h-screen">
+        <!-- Dashboard -->
+        <div class="bg-gradient-to-tr relative from-neutral-950 to-neutral-900 text-white w-72 p-6 rounded-2xl m-3">
             <h2
                 class="text-2xl font-bold mb-14 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
                 Dashboard</h2>
@@ -58,14 +60,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
                 <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
-                            <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fa-solid fa-message mr-3"></i> Messagerie</a></li>
                 <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
                 <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
-                            <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
+                <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                            class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
                 <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-cogs mr-3"></i> Mon compte</a></li>
             </ul>
@@ -90,47 +92,52 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         d="M763.274 176.239C763.274 176.239 1385.74 182.965 1227.25 181.253C1068.76 179.541 1387.22 323.489 1227.73 321.766C1068.24 320.042 763.274 176.239 763.274 176.239Z"
                         fill="white" />
                 </svg>
-                
+
             </div>
         </div>
 
-    <!-- Contenu principal -->
-    <div class="flex-1 p-8 overflow-y-auto bg-gradient-to-tr from-neutral-950 to-neutral-800 w-72 p-6 rounded-2xl m-3 h-fit px-12">
-        <h1 class="text-4xl font-bold text-white mb-6">Modifier un Benevole</h1>
+        <!-- Contenu principal -->
+        <div
+            class="flex-1 p-8 overflow-y-auto bg-gradient-to-tr from-neutral-950 to-neutral-800 w-72 p-6 rounded-2xl m-3 h-fit px-12">
+            <h1 class="text-4xl font-bold text-white mb-6">Modifier un Benevole</h1>
 
-        <!-- Formulaire -->
-        <div class="bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl mb-8">
-            <form method="POST" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium mb-2 text-green-500">Nom :</label>
-                    <input type="text" name="nom" value="<?= htmlspecialchars($benevole['nom']) ?>" required
-                           class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-2 text-green-500">Email :</label>
-                    <input type="text" name="email" value="<?= htmlspecialchars($benevole['email']) ?>" required
-                           class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-2 text-green-500">Role :</label>
-                    <select name="role" required
+            <!-- Formulaire -->
+            <div
+                class="bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl mb-8">
+                <form method="POST" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-green-500">Nom :</label>
+                        <input type="text" name="nom" value="<?= htmlspecialchars($benevole['nom']) ?>" required
                             class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
-                        <option value="" disabled selected>Sélectionnez un role</option>
-                        <?php foreach ($roles as $role): ?>
-                            <option value="<?= $role ?>" <?= $benevole['role'] == $role ? 'selected' : '' ?>>
-                                <?= htmlspecialchars($role) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="flex justify-end space-x-4">
-                    <a href="volunteer_list.php" class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white hover:text-red-500  px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">Annuler</a>
-                    <button type="submit" class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white   px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200">Modifier</button>
-                </div>
-            </form>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-green-500">Email :</label>
+                        <input type="text" name="email" value="<?= htmlspecialchars($benevole['email']) ?>" required
+                            class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-green-500">Role :</label>
+                        <select name="role" required
+                            class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
+                            <option value="" disabled selected>Sélectionnez un role</option>
+                            <?php foreach ($roles as $role): ?>
+                                <option value="<?= $role ?>" <?= $benevole['role'] == $role ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($role) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="flex justify-end space-x-4">
+                        <a href="volunteer_list.php"
+                            class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white hover:text-red-500  px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">Annuler</a>
+                        <button type="submit"
+                            class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white   px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-200">Modifier</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 </body>
+
 </html>
