@@ -86,27 +86,43 @@ error_reporting(E_ALL);
                     class="text-2xl font-bold mb-14 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
                     Dashboard
                 </h2>
+
                 <ul class="space-y-11">
+
                     <li><a href="collection_list.php"
                             class="flex items-center py-2 px-3 hover:text-white transition-colors duration-500"><i
                                 class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
+
                     <?php if ($userRole === 'admin'): ?>
                         <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                     class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
                     <?php endif; ?>
+
                     <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fa-solid fa-message mr-3"></i> Messagerie</a></li>
+
                      <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
+
                     <?php if ($userRole === 'admin'): ?>
                         <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                     class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
+
                                 <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
                     <?php endif; ?>
+                      
+                    <?php if ($userRole === 'admin'): ?>
+                         <li><a href="budget.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                  class="fas fa-cogs mr-3"></i> Budget</a></li>
+                    <?php endif; ?>
+
+
                     <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fas fa-cogs mr-3"></i> Mon compte</a></li>
+
                 </ul>
+
                 <div class="mt-6">
                     <button onclick="logout()"
                         class="w-2/3 mt-10 bg-neutral-800 text-white hover:bg-neutral-700 hover:text-red-500 py-3 rounded-full shadow-md transition-colors duration-500  ">

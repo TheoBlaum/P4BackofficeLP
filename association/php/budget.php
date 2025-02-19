@@ -1,5 +1,8 @@
 <?php
+
 require 'config.php';
+
+// Vérifie si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -12,18 +15,22 @@ $query->execute([$userId]);
 $user = $query->fetch(PDO::FETCH_ASSOC);
 $userRole = $user ? $user['role'] : null;
 
-// Connexion à la base de données
-$pdo = new PDO('mysql:host=localhost;dbname=gestion_collectes', 'superadmin', 'superpassword');
+// Requête pour récupérer les données
+try {
+    $stmt = $pdo->prepare("SELECT * FROM budget ORDER BY date DESC, heure DESC");
+    $stmt->execute();
+    $montant = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Erreur lors de la récupération des données : " . $e->getMessage());
+}
 
-// Récupération des messages
-$query = $pdo->query("
-    SELECT m.message, m.created_at, b.nom 
-    FROM messages m 
-    JOIN benevoles b ON m.user_id = b.id 
-    ORDER BY m.created_at DESC
+$stmt2 = $pdo->query("
+SELECT  SUM(montant) AS total
+FROM budget
 ");
-$messages = $query->fetchAll(PDO::FETCH_ASSOC);
+$total = $stmt2->fetch(PDO::FETCH_ASSOC)['total'];
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -45,36 +52,41 @@ $messages = $query->fetchAll(PDO::FETCH_ASSOC);
 
 <body class="bg-black">
     <div class="flex">
+
         <!-- Barre de navigation -->
         <div class="fixed top-0 h-screen p-3">
             <div class="bg-gradient-to-tr h-full from-neutral-950 to-neutral-900 text-white w-72 p-6 rounded-2xl">
-                <h2
-                    class="text-2xl font-bold mb-14 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
+                <h2 class="text-2xl font-bold mb-14 bg-gradient-to-r from-green-400 to-emerald-600 bg-clip-text text-transparent">
                     Dashboard
                 </h2>
                 <ul class="space-y-11">
+
                     <li><a href="collection_list.php"
                             class="flex items-center py-2 px-3 hover:text-white transition-colors duration-500"><i
                                 class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
+
                     <?php if ($userRole === 'admin'): ?>
-                        <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                    class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
+                    <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
                     <?php endif; ?>
+
                     <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fa-solid fa-message mr-3"></i> Messagerie</a></li>
+                    class="fa-solid fa-message mr-3"></i> Messagerie</a></li>
+
                     <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
                     <?php if ($userRole === 'admin'): ?>
-                        <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                    class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
-                        <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                    class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
-                    <?php endif; ?>
 
                     <?php if ($userRole === 'admin'): ?>
-                         <li><a href="budget.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                  class="fas fa-cogs mr-3"></i> Budget</a></li>
+                        <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                    class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
+
+                                <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
                     <?php endif; ?>
+
+                    <li><a href="budget.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                class="fas fa-cogs mr-3"></i> Budget</a></li>
 
                     <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fas fa-cogs mr-3"></i> Mon compte</a></li>
@@ -85,7 +97,7 @@ $messages = $query->fetchAll(PDO::FETCH_ASSOC);
                         Déconnexion
                     </button>
                 </div>
-                <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2">
+                <div class="absolute bottom-10 left-10">
                     <svg width="200" height="52" viewBox="0 0 1276 323" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M45.5556 0C45.5556 0 -56.9444 144.88 45.5556 144.88C148.056 144.88 154.556 144.88 154.556 144.88C173.799 129.027 181.5 123 183.442 121.5C176.5 125 61.7059 195.025 45.5556 0Z"
@@ -107,28 +119,88 @@ $messages = $query->fetchAll(PDO::FETCH_ASSOC);
         <!-- Contenu principal -->
         <div class="flex-1 ml-[324px]">
             <div class="bg-gradient-to-tr from-neutral-950 to-neutral-800 p-8 min-h-screen rounded-2xl m-3">
-                <h1 class="text-4xl font-bold text-white mb-6">Messages</h1>
-                <div
-                    class="bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl w-1/2 mb-8">
-                    <?php foreach ($messages as $msg): ?>
+
+                <!-- Titre -->
+                <h1 class="text-4xl font-bold text-stone-500 mb-6">Budget 2000€ / mois</h1>
+
+                <!-- Message de notification -->
+                <?php if (isset($_GET['message'])): ?>
+                    <div class="bg-green-100 text-green-800 p-4 rounded-md mb-6">
+                        <?= htmlspecialchars($_GET['message']) ?>
+                    </div>
+                <?php endif; ?>
+
+                <!-- Cartes d'informations -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+                    <!-- Loyer -->
+                    <div
+                        class="bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl">
+                        <h3 class="text-xl font-semibold text-white mb-3">Loyer</h3>
+                        <p class="text-3xl font-bold text-stone-400">1000€</p>
+                    </div>
+
+                    <!-- Charges -->
                         <div
-                            class="bg-neutral-700/30 backdrop-blur-lg text-white p-6 rounded-lg shadow-xl mb-8">
-                            <strong class=" text-white"><?= htmlspecialchars($msg['nom']) ?></strong>
-                            <p class="text-white-800 p-2 break-words"><?= htmlspecialchars($msg['message']) ?></p>
-                            <span class="text-xs text-gray-500"><?= $msg['created_at'] ?></span>
+                            class="bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl">
+                            <h3 class="text-xl font-semibold text-white mb-3">Charges</h3>
+                            <p class="text-3xl font-bold text-stone-400">500€</p>
                         </div>
+                   
+                    <!-- Entretien matèriel -->
+                    <div
+                        class="bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl">
+                        <h3 class="text-xl font-semibold text-white mb-3">Entretiens matèriel</h3>
+                        <p class="text-3xl font-bold text-stone-400">500€</p>
+                    </div>
+
+                    <!-- Total du mois en cours -->
+                    <div
+                        class="bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl">
+                        <h3 class="text-xl font-semibold text-white mb-3">Total du mois en cours</h3>
+                        <p class="text-3xl font-bold text-green-400"><?= $total ?> €</p>
+                    </div>
+
+                </div>
+
+                <!-- Tableau des dons -->
+                <div
+                    class="overflow-hidden bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white  mb-8 rounded-lg shadow-xl">
+                    <table class="w-full table-auto border-collapse">
+                        <thead class="bg-gradient-to-tr from-green-500 to-emerald-600 text-neutral-950">
+                            <tr>
+                                <th class="py-3 px-4 text-left">Nom</th>
+                                <th class="py-3 px-4 text-left">Date</th>
+                                <th class="py-3 px-4 text-left">Heure</th>
+                                <th class="py-3 px-4 text-left">Montant</th>
+                                <th class="py-3 px-4 text-left">Commentaire</th>
+                            </tr>
+                        </thead>
+
+            <tbody>
+                <?php if (!empty($montant)) : ?>
+                    <?php foreach ($montant as $row) : ?>
+                        <tr class="text-center">
+                            <td class="py-3 px-4 text-stone-400"><?php echo htmlspecialchars($row['nom']); ?></td>
+                            <td class="py-3 px-4 text-stone-400"><?php echo htmlspecialchars($row['date']); ?></td>
+                            <td class="py-3 px-4 text-stone-400"><?php echo htmlspecialchars($row['heure']); ?></td>
+                            <td class="py-3 px-4 text-stone-400"><?php echo number_format($row['montant'], 2, ',', ' '); ?> €</td>
+                            <td class="py-3 px-4 text-stone-400"><?php echo htmlspecialchars($row['commentaire']); ?></td>
+                        </tr>
                     <?php endforeach; ?>
+                <!-- <?php else : ?>
+                    <tr>
+                        <td colspan="5" class="text-center p-4">Aucune transaction enregistrée.</td>
+                    </tr>
+                <?php endif; ?> -->
+            </tbody>
+                    </table>
+                </div>
+
                 </div>
             </div>
         </div>
-
-
-    </div>
-
-
-
     </div>
     <script src="logout.js"></script>
 </body>
-
 </html>
