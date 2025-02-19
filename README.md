@@ -1,4 +1,4 @@
-# Back Office
+# Application Back Office
 
 ## Description
 Ce projet est une application back-office de gestion d'association permettant de gérer les membres, les événements, les activités d'une association et d'afficher des données clées.
