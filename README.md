@@ -30,4 +30,9 @@ Elle est destinée a être utilisée par un unique administrateur, mais laisse l
 
 ## Installation
 1. Clonez le repository
-2. Importer le fichier SQL dans une base de donnée
+2. Importez le fichier SQL dans une base de données
+3. Téléchargez WAMP / MANP / XAMPP ou LAMP
+4. Activez le server "localhost"
+5. Accédez à l'interface via l'URL
+6. Sur la page de connexion pour l'administrateur veuillez entrer en identifiant: alice.dupont@example.com et en mot de passe: alicedupont
+7. Pour un participant, l'identifiant: bob.martin@example.com et mot de passe: bobmartin
