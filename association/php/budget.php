@@ -79,7 +79,7 @@ $total = $stmt2->fetch(PDO::FETCH_ASSOC)['total']; // On récupère la valeur du
                     <?php endif; ?>
 
                     <li><a href="budget.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                class="fas fa-cogs mr-3"></i> Budget</a></li>
+                                class="fas fa-coins mr-3"></i> Budget</a></li>
 
                     <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                                 class="fas fa-cogs mr-3"></i> Mon compte</a></li>
@@ -90,7 +90,7 @@ $total = $stmt2->fetch(PDO::FETCH_ASSOC)['total']; // On récupère la valeur du
                         Déconnexion
                     </button>
                 </div>
-                <div class="absolute bottom-10 left-10">
+                <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2">
                     <svg width="200" height="52" viewBox="0 0 1276 323" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M45.5556 0C45.5556 0 -56.9444 144.88 45.5556 144.88C148.056 144.88 154.556 144.88 154.556 144.88C173.799 129.027 181.5 123 183.442 121.5C176.5 125 61.7059 195.025 45.5556 0Z"
@@ -114,7 +114,7 @@ $total = $stmt2->fetch(PDO::FETCH_ASSOC)['total']; // On récupère la valeur du
             <div class="bg-gradient-to-tr from-neutral-950 to-neutral-800 p-8 min-h-screen rounded-2xl m-3">
 
                 <!-- Titre -->
-                <h1 class="text-4xl font-bold text-stone-500 mb-6">Budget 2000€ / mois</h1>
+                <h1 class="text-4xl font-bold text-white mb-6">Budget</h1>
 
                 <!-- Cartes d'informations -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -136,14 +136,14 @@ $total = $stmt2->fetch(PDO::FETCH_ASSOC)['total']; // On récupère la valeur du
                     <!-- Entretien matèriel -->
                     <div
                         class="bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl">
-                        <h3 class="text-xl font-semibold text-white mb-3">Entretiens matèriel</h3>
+                        <h3 class="text-xl font-semibold text-white mb-3">Entretiens matériel</h3>
                         <p class="text-3xl font-bold text-stone-400">500€</p>
                     </div>
 
                     <!-- Total du mois en cours -->
                     <div
                         class="bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl">
-                        <h3 class="text-xl font-semibold text-white mb-3">Total du mois en cours</h3>
+                        <h3 class="text-xl font-semibold text-white mb-3">Dons collectés</h3>
                         <p class="text-3xl font-bold text-green-400"><?= $total ?> €</p>
                     </div>
 
@@ -166,7 +166,7 @@ $total = $stmt2->fetch(PDO::FETCH_ASSOC)['total']; // On récupère la valeur du
             <tbody>
                 <?php if (!empty($montant)) : ?>
                     <?php foreach ($montant as $row) : ?>
-                        <tr class="text-center">
+                        <tr>
                             <td class="py-3 px-4 text-stone-400"><?php echo htmlspecialchars($row['nom']); ?></td>
                             <td class="py-3 px-4 text-stone-400"><?php echo htmlspecialchars($row['date']); ?></td>
                             <td class="py-3 px-4 text-stone-400"><?php echo htmlspecialchars($row['heure']); ?></td>

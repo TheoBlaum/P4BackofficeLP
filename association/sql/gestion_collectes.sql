@@ -43,10 +43,10 @@ CREATE TABLE IF NOT EXISTS `benevoles` (
 --
 
 INSERT INTO `benevoles` (`id`, `nom`, `email`, `mot_de_passe`, `role`) VALUES
-(1, 'Alice Dupont', 'alice.dupont@example.com', '5504b4f70ca78f97137ff8ad5f910248', 'admin'),
-(2, 'Bob Martin', 'bob.martin@example.com', '2e248e7a3b4fbaf2081b3dff10ee402b', 'participant'),
+(1, 'Alice Dupont', 'alice.dupont@example.com', 'alicedupont', 'admin'),
+(2, 'Bob Martin', 'bob.martin@example.com', 'bobmartin', 'participant'),
 (3, 'Charlie Dubois', 'charlie.dubois@example.com', '9148b120a413e9e84e57f1231f04119a', 'participant'),
-(9, 'Michel', 'Michmich@gmail.com', 'Michel12', 'participant');
+
 
 -- --------------------------------------------------------
 
@@ -127,3 +127,26 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+CREATE TABLE messages (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT,
+  message TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO `messages` (`id`, `user_id`, `message`, `created_at`) VALUES (NULL, '1', 'Bienvenue', CURRENT_TIMESTAMP);
+
+DROP TABLE IF EXISTS `budget`;
+CREATE TABLE IF NOT EXISTS `budget` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `date` date NOT NULL,
+  `heure` time DEFAULT NULL,
+  `montant` float NOT NULL,
+  `commentaire` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `budget` (`id`, `nom`, `date`, `heure`, `montant`, `commentaire`) VALUES (NULL, 'Anonyme', '2025-02-18', '21:56:39', '3000', 'Dons anonyme');

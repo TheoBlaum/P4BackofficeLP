@@ -271,8 +271,8 @@ error_reporting(E_ALL);
                     class="overflow-hidden bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white w-1/2 rounded-lg shadow-xl p-6">
                     <h2 class="text-xl font-semibold mb-4">Répartition des types de déchets collectés</h2>
 
-                    <canvas id="radarChart"></canvas>
-                    <?php if ($userRole === 'admin'): ?>
+                    <canvas id="radarChart"></canvas>     <!-- Zone du graphique -->
+                    <?php if ($userRole === 'admin'): ?>    <!--  Bouton télécharger uniquement possible pour les admin -->
                         <div class="mt-6 flex justify-end">
                             <button onclick="downloadChart()"
                                 class="bg-neutral-800 text-white hover:bg-neutral-700 hover:text-green-500 py-2 px-4 rounded transition-colors duration-500">
@@ -292,19 +292,29 @@ error_reporting(E_ALL);
                                 label: 'Quantité totale (kg)',
                                 data: [
                                     <?php
+                                    // Requête SQL pour obtenir la somme des quantités par type de déchet
                                     $stmt = $pdo->query("SELECT type_dechet, SUM(quantite_kg) as total 
-                                                            FROM dechets_collectes 
-                                                            GROUP BY type_dechet");
+                                                        FROM dechets_collectes 
+                                                        GROUP BY type_dechet");
+                                    
+                                    // Récupération des résultats dans un tableau associatif
                                     $totals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                    
+                                    // Création d'un tableau pour stocker les totaux par type de déchet
                                     $data = array();
+                                    
+                                    // Remplissage du tableau avec les totaux
                                     foreach ($totals as $total) {
                                         $data[$total['type_dechet']] = $total['total'];
                                     }
-                                    echo $data['Plastique'] ?? 0, ", ";
-                                    echo $data['Verre'] ?? 0, ", ";
-                                    echo $data['Papier'] ?? 0, ", ";
-                                    echo $data['Métal'] ?? 0, ", ";
-                                    echo $data['Organiques'] ?? 0;
+                                    
+                                    // Affichage des valeurs dans l'ordre correspondant aux labels
+                                    // L'opérateur ?? 0 permet de retourner 0 si le type de déchet n'existe pas
+                                    echo $data['Plastique'] ?? 0, ", ";  // Total pour le plastique
+                                    echo $data['Verre'] ?? 0, ", ";      // Total pour le verre
+                                    echo $data['Papier'] ?? 0, ", ";     // Total pour le papier
+                                    echo $data['Métal'] ?? 0, ", ";      // Total pour le métal
+                                    echo $data['Organiques'] ?? 0;       // Total pour les déchets organiques
                                     ?>
                                 ],
                                 backgroundColor: 'rgba(27, 183, 97, 0.2)',
@@ -317,7 +327,7 @@ error_reporting(E_ALL);
                             }]
                         };
 
-                        // Configuration du radar chart
+                        // Configuration du radar chart (chart.js)
                         const config = {
                             type: 'radar',
                             data: data,

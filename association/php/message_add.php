@@ -1,27 +1,29 @@
 <?php
+// ----------------------Initialisation------------------------
 require 'config.php';
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
 
-// Vérifiez le rôle de l'utilisateur connecté
-$userId = $_SESSION['user_id'];
-$query = $pdo->prepare("SELECT role FROM benevoles WHERE id = ?");
-$query->execute([$userId]);
-$user = $query->fetch(PDO::FETCH_ASSOC);
-$userRole = $user ? $user['role'] : null;
+// ----------------------Recupérer les messages------------------------
 
-$user_id = $_SESSION['user_id'];
+$userId = $_SESSION['user_id']; // Récupère l'ID de l'utilisateur connecté à partir de la session
+$query = $pdo->prepare("SELECT role FROM benevoles WHERE id = ?"); //Prépare une requête SQL
+$query->execute([$userId]); //Exécuté la requête SQL
+$user = $query->fetch(PDO::FETCH_ASSOC); //Récupère l'utilisateur connecté
+$userRole = $user ? $user['role'] : null; //Stock le rôle de l'utilisateur et si on en a pas on met comme Null
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $message = $_POST['message'];
+$user_id = $_SESSION['user_id']; 
 
-    // Insert message with the logged-in user's ID
-    $stmt = $pdo->prepare("INSERT INTO messages (user_id, message) VALUES (?, ?)");
-    $stmt->execute([$user_id, $message]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') { //Verifie Si un formulaire a ete soumis
+    $message = $_POST['message']; //Recupere le message de l'utilisateur
 
-    header("Location: chatting.php");
+ 
+    $stmt = $pdo->prepare("INSERT INTO messages (user_id, message) VALUES (?, ?)"); //prepare la requete SQL pour inserer le message dans la table
+    $stmt->execute([$user_id, $message]); //On execute la requete en passant l'id et le message en parametre
+
+    header("Location: chatting.php"); // on redirige vers la page chatting don pour voir les messages
 }
 ?>
 

@@ -77,24 +77,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <li><a href="collection_list.php"
                         class="flex items-center py-2 px-3 hover:text-white transition-colors duration-500 "><i
                             class="fas fa-tachometer-alt mr-3"></i> Tableau de bord</a></li>
-                <?php if ($userRole === 'admin'): ?>             
-                <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                            class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
-                <?php endif; ?> <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                <?php if ($userRole === 'admin'): ?>
+                    <li><a href="collection_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                class="fas fa-plus-circle mr-3"></i> Ajouter une collecte</a></li>
+                <?php endif; ?>
+                <li><a href="chatting.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fa-solid fa-message mr-3"></i> Messagerie</a></li>
                 <li><a href="volunteer_list.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fa-solid fa-list mr-3"></i> Liste des bénévoles</a></li>
                 <?php if ($userRole === 'admin'): ?>
-                <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                            class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
-                            <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                            class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
+                    <li><a href="user_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                class="fas fa-user-plus mr-3"></i> Ajouter un bénévole</a></li>
+                    <li><a href="message_add.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                class="fa-solid fa-pen-to-square mr-3"></i> Ajouter un message</a></li>
                 <?php endif; ?>
 
                 <?php if ($userRole === 'admin'): ?>
-                         <li><a href="budget.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
-                                  class="fas fa-coins mr-3"></i> Budget</a></li>
-                    <?php endif; ?>
+                    <li><a href="budget.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
+                                class="fas fa-coins mr-3"></i> Budget</a></li>
+                <?php endif; ?>
 
                 <li><a href="my_account.php" class="flex items-center py-2 px-3 hover:text-white rounded-lg"><i
                             class="fas fa-cogs mr-3"></i> Mon compte</a></li>
@@ -106,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </button>
             </div>
             <div class="absolute bottom-9 left-1/2 transform -translate-x-1/2">
-            <svg width="200" height="52" viewBox="0 0 1276 323" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="200" height="52" viewBox="0 0 1276 323" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M45.5556 0C45.5556 0 -56.9444 144.88 45.5556 144.88C148.056 144.88 154.556 144.88 154.556 144.88C173.799 129.027 181.5 123 183.442 121.5C176.5 125 61.7059 195.025 45.5556 0Z"
                         fill="#1BB761" />
@@ -131,7 +132,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <!-- Affichage du message -->
             <?php if (!empty($message)): ?>
-                <div class="text-center mb-4 <?= strpos($message, 'succès') !== false ? 'text-green-600' : 'text-red-600' ?>">
+                <div
+                    class="text-center mb-4 <?= strpos($message, 'succès') !== false ? 'text-green-600' : 'text-red-600' ?>">
                     <?= htmlspecialchars($message) ?>
                 </div>
             <?php endif; ?>
@@ -142,7 +144,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <!-- Champ Email -->
                     <div>
                         <label for="email" class="block text-sm mb-2 font-medium text-green-500">Email :</label>
-                        <input type="email" name="email" id="email" placeholder="<?= htmlspecialchars($user['email']) ?>" required
+                        <input type="email" name="email" id="email"
+                            placeholder="<?= htmlspecialchars($user['email']) ?>" required
                             class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
                     </div>
 
@@ -156,7 +159,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <!-- Champ Nouveau Mot de passe -->
                     <div>
-                        <label for="new_password" class="block text-sm mb-2 font-medium text-green-500">Nouveau mot de passe
+                        <label for="new_password" class="block text-sm mb-2 font-medium text-green-500">Nouveau mot de
+                            passe
                             :</label>
                         <input type="password" name="new_password" id="new_password"
                             class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
@@ -164,21 +168,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <!-- Champ Confirmer le nouveau Mot de passe -->
                     <div>
-                        <label for="confirm_password" class="block text-sm mb-2  font-medium text-green-500">Confirmer le
+                        <label for="confirm_password" class="block text-sm mb-2  font-medium text-green-500">Confirmer
+                            le
                             mot de
                             passe :</label>
                         <input type="password" name="confirm_password" id="confirm_password"
                             class="w-full p-2 bg-neutral-900/30 backdrop-blur-lg border border-white/20 text-white p-6 rounded-lg shadow-xl max-w-xl mx-auto">
                     </div>
                     <style>
-                            input::placeholder {
-                                color: rgba(255, 255, 255);
-                            }
-                        </style>
+                        input::placeholder {
+                            color: rgba(255, 255, 255);
+                        }
+                    </style>
 
                     <!-- Boutons -->
                     <div class="flex justify-between items-center">
-                        <a href="collection_list.php" class="text-sm text-neutral-400 hover:underline">Retour à la liste des
+                        <a href="collection_list.php" class="text-sm text-neutral-400 hover:underline">Retour à la liste
+                            des
                             collectes</a>
                         <button type="submit"
                             class="bg-neutral-800/30 backdrop-blur-lg border border-white/20 hover:bg-neutral-600/30 text-white px-4 py-2 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
@@ -208,4 +214,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
-
