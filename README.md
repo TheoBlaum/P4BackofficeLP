@@ -30,4 +30,4 @@ Elle est destinée a être utilisée par un unique administrateur, mais laisse l
 
 ## Installation
 1. Clonez le repository
-...
+2. Importer le fichier SQL dans une base de donnée
